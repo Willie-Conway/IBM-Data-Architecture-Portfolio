@@ -1,0 +1,1 @@
+GRANT SELECT, INSERT, UPDATE ON `customerorders`.* TO 'sales_rep'@'%'; ALTER USER 'sales_rep'@'%' ;

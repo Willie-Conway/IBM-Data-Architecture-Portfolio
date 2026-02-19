@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Governance & Security Glossary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4f8;
+            color: #1e2b37;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0a3147 0%, #1b4f6e 100%);
+            color: white;
+            padding: 30px 0;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 20, 30, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        
+        .logo-icon {
+            font-size: 2.8rem;
+            color: #5fc1e0;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .reading-time {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            margin-top: 12px;
+            backdrop-filter: blur(4px);
+        }
+        
+        .reading-time i {
+            margin-right: 8px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .search-section {
+            background-color: white;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .search-box {
+            flex: 1;
+            padding: 16px 22px;
+            border: 2px solid #dde5ed;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #f9fcff;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #1f7faa;
+            box-shadow: 0 0 0 4px rgba(31, 127, 170, 0.15);
+            background-color: white;
+        }
+        
+        .clear-btn {
+            background-color: #f2f6fa;
+            border: 2px solid #dde5ed;
+            padding: 0 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: #1e3b4c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .clear-btn:hover {
+            background-color: #e3ecf3;
+            border-color: #b3c6d6;
+        }
+        
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .letter-btn {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f2f6fa;
+            border: 1px solid #cad8e6;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: #1e3b4c;
+        }
+        
+        .letter-btn:hover:not(.disabled) {
+            background-color: #1b5a7a;
+            color: white;
+            border-color: #1b5a7a;
+            transform: translateY(-2px);
+        }
+        
+        .letter-btn.active {
+            background-color: #1b5a7a;
+            color: white;
+            border-color: #1b5a7a;
+            box-shadow: 0 4px 8px rgba(27, 90, 122, 0.3);
+        }
+        
+        .letter-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .glossary-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .terms-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+        }
+        
+        .section-title {
+            font-size: 1.7rem;
+            color: #0a3147;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #e4eef5;
+            font-weight: 600;
+        }
+        
+        .terms-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .term-item {
+            padding: 22px;
+            border-radius: 14px;
+            background-color: #f9fcff;
+            transition: all 0.25s;
+            border-left: 5px solid transparent;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        
+        .term-item:hover {
+            background-color: #eef7fd;
+            border-left-color: #2c8eb8;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -10px rgba(27, 90, 122, 0.2);
+        }
+        
+        .term-name {
+            font-size: 1.4rem;
+            color: #0a3147;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        
+        .term-letter {
+            background-color: #1f7faa;
+            color: white;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .term-definition {
+            color: #2d4a5e;
+            line-height: 1.7;
+            font-size: 1rem;
+            padding-left: 46px;
+        }
+        
+        .stats-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+            align-self: start;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-box {
+            background-color: #f0f7fc;
+            padding: 20px 12px;
+            border-radius: 14px;
+            text-align: center;
+            border-top: 5px solid #2c8eb8;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a3147;
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            color: #3d637b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #5d7f96;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #b0ccdf;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding: 30px 0 20px;
+            border-top: 1px solid #cbdae7;
+            text-align: center;
+            color: #3e6077;
+        }
+        
+        .author {
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 1rem;
+        }
+        
+        .footer-logo {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0a3147;
+        }
+        
+        @media (max-width: 992px) {
+            .glossary-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            .search-container {
+                flex-direction: column;
+            }
+            .clear-btn {
+                justify-content: center;
+                padding: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h1>Data Governance & Security</h1>
+                        <p class="subtitle">An alphabetized glossary of essential data protection, compliance, and governance terms</p>
+                        <div class="reading-time">
+                            <i class="far fa-clock"></i>
+                            <span>Estimated reading time: 10 minutes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="clear-btn" id="resetBtn">
+                        <i class="fas fa-rotate-right"></i> Reset Glossary
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <section class="search-section">
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search for a term, definition, or acronym...">
+                    <button class="clear-btn" id="clearSearchBtn">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+                
+                <div class="alphabet-nav" id="alphabetNav">
+                    <!-- JS will populate -->
+                </div>
+            </section>
+
+            <div class="glossary-container">
+                <section class="terms-section">
+                    <h2 class="section-title" id="sectionTitle">📘 All Terms</h2>
+                    <div class="terms-list" id="termsList"></div>
+                    <div id="noResults" class="no-results" style="display: none;">
+                        <i class="fa-regular fa-face-frown"></i>
+                        <h3>No matching terms</h3>
+                        <p>Try a different keyword or browse by letter</p>
+                    </div>
+                </section>
+
+                <section class="stats-section">
+                    <h2 class="section-title" style="font-size:1.4rem;">📊 Glossary Stats</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value" id="totalTerms">0</div>
+                            <div class="stat-label">Total Terms</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="visibleTerms">0</div>
+                            <div class="stat-label">Visible</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="searchCount">0</div>
+                            <div class="stat-label">Searches</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="lastLetter">-</div>
+                            <div class="stat-label">Last Letter</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px; padding: 18px; background: #e9f2f9; border-radius: 14px;">
+                        <h3 style="font-size: 1rem; margin-bottom: 8px; color: #0a3147;"><i class="fas fa-info-circle"></i> About this glossary</h3>
+                        <p style="color: #1f4a64; font-size: 0.9rem;">
+                            This glossary contains key data governance and security terms used in the course. 
+                            Understanding these terms is essential when working in the industry, participating in user groups, 
+                            and pursuing certificate programs.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <p>Glossary: Data Governance & Security Fundamentals</p>
+            <p class="author">Instructor: Willie Conway</p>
+            <div class="footer-logo">DataTrust Academy</div>
+        </footer>
+    </div>
+
+    <script>
+        // Full glossary data (Term, Definition) — alphabetized manually for consistency
+        const glossaryData = [
+            { term: "Access control", definition: "A mechanism to allow only authorized personnel to access data storage facilities, servers, or physical devices. It manages permissions to view, modify, or delete data." },
+            { term: "Advanced encryption standards (AES)", definition: "A cryptographic algorithm used for encrypting and decrypting data." },
+            { term: "Anonymization", definition: "A technique applied to sensitive information to ensure that even if it is accessed, it cannot be traced back to an individual." },
+            { term: "Application programming interface (API) key", definition: "A code or token used to identify an application or user and is used for authentication in computer applications." },
+            { term: "Asymmetric encryption", definition: "An encryption that uses a pair of keys – one for encryption (public key) and one for decryption (private key)." },
+            { term: "Availability", definition: "Ensures that data is accessible to authorized users when needed." },
+            { term: "Blockchain technology", definition: "Technology that comprises a decentralized and immutable ledger that provides a tamper-proof way to store and manage data, making it useful for secure transactions and auditing." },
+            { term: "Brute force attacks", definition: "A hacking method that uses trial and error to crack passwords, login credentials, and encryption keys." },
+            { term: "Buffer overflows", definition: "A condition that occurs when a program attempts to put more data in a buffer than it can hold. This overloading enables hackers to exploit vulnerabilities, steal data, and gain unauthorized access to corporate systems." },
+            { term: "California Consumer Privacy Act (CCPA)", definition: "A data privacy law enacted in California imposing strict guidelines on how organizations should handle personal data." },
+            { term: "Chief data officer (CDO)", definition: "Person responsible for developing and implementing data governance strategies." },
+            { term: "CIA Triad", definition: "A model that consists of three key principles: confidentiality, integrity, and availability, which together ensure that data is protected, reliable, and accessible to authorized users." },
+            { term: "Cloud Pak for Data", definition: "A unified platform that combines data governance, artificial intelligence or AI, and analytics capabilities." },
+            { term: "Collibra", definition: "A comprehensive data governance platform with benefits such as data cataloging, stewardship management, and policy enforcement." },
+            { term: "Compliance officers", definition: "Ensure that the organization's data governance practices comply with external regulations, such as the General Data Protection Regulation or GDPR, the Health Insurance Portability and Accountability Act or HIPAA, and other industry-specific standards." },
+            { term: "Compliance risks", definition: "Risks from failing to adhere to regulations such as General Data Protection Regulation or GDPR, Health Insurance Portability and Accountability Act or HIPAA, and California Consumer Privacy Act or CCPA, leading to significant fines and legal liabilities." },
+            { term: "Confidentiality", definition: "Refers to the protection of sensitive information from unauthorized access." },
+            { term: "Control Objectives for Information and Related Technology (COBIT)", definition: "A data governance framework designed to help businesses develop, organize, and implement strategies for information technology governance and management." },
+            { term: "Credential stuffing", definition: "A type of cyberattack that obtains credentials from a data breach on one service and uses the credentials to gain unauthorized access to user accounts on other systems." },
+            { term: "Cross-site scripting (XSS)", definition: "A client-side code injection attack, in which malicious scripts are injected into otherwise benign and trusted websites." },
+            { term: "Cybersecurity risks", definition: "External threats such as hacking, phishing, malware, and ransomware that compromise data security." },
+            { term: "Database", definition: "A storage type comprising relational and NoSQL databases that store both transactional and operational data." },
+            { term: "Data analysts", definition: "Essential in deriving insights from data to support informed decision-making within the organization." },
+            { term: "Data architecture", definition: "Refers to the structural design of an organization's data assets and the standards, policies, and models governing how data is collected, stored, and accessed." },
+            { term: "Data at rest", definition: "Refers to stored data, such as on a hard drive, server, or in the cloud." },
+            { term: "Data breach", definition: "Exposes sensitive information such as personal identification details, financial records, and intellectual property to unauthorized users. These breaches can lead to identity theft, financial fraud, and other forms of exploitation." },
+            { term: "Data cleansing", definition: "Refers to continuously removing duplicates, correcting errors, and ensuring that data is accurate before it is used for analysis." },
+            { term: "Data compliance regulations", definition: "The standards and laws that dictate how organizations should collect, store, manage, and protect data." },
+            { term: "Data custodians", definition: "Manage the technical aspects of data management." },
+            { term: "Data encryption", definition: "The process of encoding data in such a way that only authorized parties can access it. A decryption key is required to decode the data." },
+            { term: "Data governance", definition: "The set of policies, standards, and procedures that govern how data is managed across an organization." },
+            { term: "Data governance council", definition: "The top decision-making body in a data governance framework. It comprises C-suite executives, key business leaders, and stakeholders from various departments." },
+            { term: "Data governance managers", definition: "Play a critical role in overseeing the implementation and management of the data governance framework within an organization." },
+            { term: "Data in motion", definition: "Pertains to data while it is being transmitted over a network." },
+            { term: "Data integrity", definition: "Ensures that information remains accurate, consistent, and trustworthy over its lifecycle." },
+            { term: "Data integration", definition: "Ensures that disparate data sources can be unified and made available for analysis." },
+            { term: "Data lakes", definition: "A data storage type used for storing raw, unprocessed data." },
+            { term: "Data management", definition: "The practice of collecting, storing, organizing, maintaining, and using data securely and efficiently to improve business outcomes." },
+            { term: "Data maintenance", definition: "Comprises activities that include removing duplicate records, correcting entry errors, and ensuring data is in the proper format." },
+            { term: "Data minimization", definition: "Refers to only collecting and storing data that is strictly necessary for a specific purpose." },
+            { term: "Data models", definition: "Visual representations of how data is structured and organized." },
+            { term: "Data profiling", definition: "Refers to analyzing data to understand its structure and identify issues such as missing values or inconsistencies." },
+            { term: "Data protection officer (DPO)", definition: "An officer to oversee data protection efforts." },
+            { term: "Data quality", definition: "Ensures the accuracy, completeness, and consistency of data." },
+            { term: "Data risks", definition: "Potential threats to an organization's data that could result in unauthorized access, data breaches, data loss, or legal liabilities." },
+            { term: "Data risk management", definition: "A structured process that helps organizations identify potential risks, evaluate their impact, and develop strategies to mitigate those risks." },
+            { term: "Data secrecy", definition: "Focuses on preventing unauthorized parties from learning the content of sensitive data, ensuring that data is completely hidden or disguised from unauthorized users." },
+            { term: "Data security", definition: "Refers to the strategies that you use to protect digital information in an organization from unauthorized access, theft, or damage." },
+            { term: "Data silos", definition: "Data stored in separate systems or departments, making it difficult to integrate and use holistically." },
+            { term: "Data stewardship", definition: "Involves the management of an organization's data assets by individuals, known as data stewards." },
+            { term: "Data stewards", definition: "Responsible for the daily management of data assets, ensuring the integrity, quality, and accuracy of an organization's data." },
+            { term: "Data storage", definition: "Refers to where data is physically stored, such as in databases, data warehouses, data lakes, or cloud storage systems." },
+            { term: "Data transparency", definition: "Involves clearly defining and making visible the processes, policies, and ownership of data within an organization to relevant stakeholders." },
+            { term: "Data warehouse", definition: "A data storage type used for storing structured, processed data for analysis." },
+            { term: "Denial-of-service (DoS)", definition: "A cyber-attack that aims to overwhelm a network, server, or website with traffic, causing it to crash or become unavailable." },
+            { term: "Dictionary attacks", definition: "A type of password attack where an intruder attempts to crack a password-protected security system with a 'dictionary list' of common words and phrases used by businesses and individuals." },
+            { term: "Distributed denial-of-service (DDoS)", definition: "A cybercrime that involves multiple compromised systems flooding the target with internet traffic to disrupt services and make them inaccessible to users." },
+            { term: "Elliptic Curve Cryptography (ECC)", definition: "A public-key cryptography algorithm that uses a mathematical formula to encrypt, authenticate, and digitally sign data." },
+            { term: "Extract, transform, load (ETL)", definition: "A tool for data processing that extracts, transforms, and loads data." },
+            { term: "Federal Information Security Management Act (FISMA)", definition: "A U.S. law enacted in 2002 to protect government information and assets against threats. FISMA requires federal agencies and their contractors to develop, document, and implement an information security program to safeguard their information systems." },
+            { term: "Firewalls", definition: "A mechanism that acts as a barrier between trusted internal networks and untrusted external networks, monitoring and controlling incoming and outgoing network traffic based on predetermined security rules." },
+            { term: "General Data Protection Regulation (GDPR)", definition: "A European Union (EU) law imposing strict guidelines on how organizations should handle personal data." },
+            { term: "Group-based access control", definition: "An access model for managing data access, where users are placed into groups, and permissions are assigned to the groups rather than to individual users." },
+            { term: "Hardware security modules (HSMs)", definition: "Hardware devices that protect and manage cryptographic keys and perform encryption and decryption functions." },
+            { term: "Hashing", definition: "A process of transforming data into a fixed-length string of characters, which is typically a hash value." },
+            { term: "Health Insurance Portability and Accountability Act (HIPAA)", definition: "A federal law that protects individuals' health information and establishes standards for electronic protected health information (ePHI)." },
+            { term: "Informatica", definition: "A data governance suite that provides a complete set of tools for managing data quality, governance, and security." },
+            { term: "Information Security Management System (ISO) 27001", definition: "An international standard that focuses on managing information security. It prioritizes data confidentiality, integrity, and availability, ensuring that data is securely managed through effective policies for access, storage, and dissemination." },
+            { term: "Insider threats", definition: "A data exposure that involves employees, contractors, partners, or other stakeholders with access to sensitive data who may unintentionally expose it through negligence or intentionally disclose it for personal gain or revenge." },
+            { term: "Intentional threats", definition: "Include threats posed by disgruntled employees who may misuse their access to steal or damage data." },
+            { term: "JSON web tokens (JWT)", definition: "Compact, URL-safe tokens used for securely transmitting information between parties as a JSON object." },
+            { term: "Key revocation", definition: "Refers to ensuring that compromised or expired keys are properly revoked and replaced." },
+            { term: "Key rotation", definition: "Refers to periodically changing encryption keys to minimize the risk of key compromise." },
+            { term: "Least privilege principle", definition: "A principle to provide users with a minimum level of access required to perform their responsibilities and duties." },
+            { term: "Malware", definition: "A malicious software that can extract sensitive information, including financial data, login credentials, and personal identifiers." },
+            { term: "Man-in-the-middle (MITM)", definition: "A cyberattack in which the attacker secretly relays or changes the communications between two parties who believe that they are directly communicating with each other, as the attacker has inserted themselves between the two user parties." },
+            { term: "Master data management (MDM)", definition: "A solution to standardize and synchronize key data elements such as customer, product, and financial data." },
+            { term: "Message Digest 5 (MD5)", definition: "A hashing function that produces a 128-bit hash value." },
+            { term: "Metadata", definition: "Data about data. It provides context by describing the contents and characteristics of the data." },
+            { term: "Multi-factor authentication (MFA)", definition: "A multi-step account login process that requires users to provide two or more verification factors to gain access to a resource." },
+            { term: "OAuth tokens", definition: "Access tokens used for authenticating the client application to access specific resources on the resource owner's behalf." },
+            { term: "Operational risks", definition: "Internal issues such as human error, system failures, or poor data management practices." },
+            { term: "Personal data", definition: "Includes financial information, social security numbers, health records, and so on." },
+            { term: "Personally identifiable information (PII)", definition: "Refers to any data that can be used to identify a specific individual. This information can range from direct identifiers, such as names, social security numbers, and so on." },
+            { term: "Phishing", definition: "A cybersecurity attack in which cybercriminals send deceptive emails or messages or design fake websites to trick users into providing sensitive information, such as usernames, passwords, or credit card numbers." },
+            { term: "Protected Health Information (PHI)", definition: "Refers to private individuals' health information." },
+            { term: "Public key infrastructure (PKI)", definition: "A set of tools, policies, and procedures that create and manage digital certificates and public-key encryption." },
+            { term: "Quantum computing", definition: "A new technology that uses aspects of computer science, physics, mathematics, and quantum mechanics to solve complex problems faster than traditional computers." },
+            { term: "Ransomware", definition: "A type of malware that can lock users out of their systems and demand a ransom to regain access." },
+            { term: "Rate limiting", definition: "A technique that protects APIs from abuse or denial-of-service attacks by limiting the number of requests that can be made within a specific time frame." },
+            { term: "Rivest-Shamir-Adleman (RSA)", definition: "An asymmetric algorithm. It A public-key encryption algorithm that uses a pair of keys to protect sensitive data." },
+            { term: "Role-based access control (RBAC)", definition: "A method used to assign permissions to users based on their roles and responsibilities within the organization." },
+            { term: "Risk assessment", definition: "Involves assessing the potential impact and likelihood of risk." },
+            { term: "Risk mitigation", definition: "Involves implementing safeguards, policies, and controls to protect data and minimize the chances of risk events." },
+            { term: "SAP Master Data Governance (MDG)", definition: "An enterprise solution designed to manage and govern master data across an organization. It centralizes master data management, ensuring high data quality and consistency across operational systems." },
+            { term: "Sarbanes-Oxley Act (SOX)", definition: "A U.S. regulation enacted in 2002 to protect investors by ensuring the accuracy and reliability of corporate financial disclosures." },
+            { term: "Secure Hash Algorithm 256-bit (SHA-256)", definition: "A hashing function that generates a 256-bit hash value and is considered more secure than MD5." },
+            { term: "Security information and event management (SIEM)", definition: "A system that helps identify unusual activities, such as unauthorized access or data breaches." },
+            { term: "SQL injection", definition: "A vulnerability that allows an attacker to interfere with the queries that an application makes to its database." },
+            { term: "Symmetric encryption", definition: "An encryption that uses the same key for both encryption and decryption." },
+            { term: "Talend", definition: "Offers open-source and enterprise-grade data integration tools with strong data governance capabilities." },
+            { term: "Third-party risks", definition: "Risks that occur during outsourcing data processing or sharing information with vendors, increasing the potential for data exposure or mishandling." },
+            { term: "Unintentional threats", definition: "Threats that occur when employees inadvertently expose sensitive information, such as by sending it to the wrong recipient or using unsecured networks." },
+            { term: "Virtual private networks (VPNs)", definition: "A technique to create a secure and encrypted connection between a user's device and the network, especially when accessing corporate networks remotely." },
+            { term: "Zero trust security", definition: "A model that assumes that threats exist both outside and within the network. It requires continuous verification of user identities and devices before granting access to resources." },
+            { term: "Zero-day exploits", definition: "A cyber-attack that exploits target software vulnerabilities unknown to the software vendor. Attackers can use these exploits to compromise systems and steal data because no patch or fix is available for undiscovered flaws in the software." }
+        ];
+
+        // Sort alphabetically
+        glossaryData.sort((a,b) => a.term.localeCompare(b.term));
+
+        // ----- DOM elements -----
+        const termsList = document.getElementById('termsList');
+        const alphabetNav = document.getElementById('alphabetNav');
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const noResults = document.getElementById('noResults');
+        const sectionTitle = document.getElementById('sectionTitle');
+
+        const totalTermsEl = document.getElementById('totalTerms');
+        const visibleTermsEl = document.getElementById('visibleTerms');
+        const searchCountEl = document.getElementById('searchCount');
+        const lastLetterEl = document.getElementById('lastLetter');
+
+        // State
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let searchCount = 0;
+        let lastLetterViewed = '-';
+
+        // ----- helpers -----
+        function getFirstLetter(term) {
+            return term.term.charAt(0).toUpperCase();
+        }
+
+        function letterHasTerms(letter) {
+            return glossaryData.some(item => getFirstLetter(item) === letter);
+        }
+
+        function buildAlphabetNav() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            alphabetNav.innerHTML = '';
+
+            const allBtn = document.createElement('button');
+            allBtn.className = 'letter-btn active';
+            allBtn.textContent = 'All';
+            allBtn.dataset.letter = 'all';
+            allBtn.addEventListener('click', () => filterByLetter('all'));
+            alphabetNav.appendChild(allBtn);
+
+            letters.forEach(l => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = l;
+                btn.dataset.letter = l;
+                if (!letterHasTerms(l)) {
+                    btn.classList.add('disabled');
+                } else {
+                    btn.addEventListener('click', () => filterByLetter(l));
+                }
+                alphabetNav.appendChild(btn);
+            });
+        }
+
+        function filterByLetter(letter) {
+            currentFilter = letter;
+            currentSearch = '';
+            searchInput.value = '';
+
+            document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.querySelector(`.letter-btn[data-letter="${letter}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if (letter !== 'all') {
+                lastLetterViewed = letter;
+                lastLetterEl.textContent = letter;
+            } else {
+                lastLetterViewed = '-';
+                lastLetterEl.textContent = '-';
+            }
+
+            sectionTitle.textContent = letter === 'all' ? '📘 All Terms' : `📘 Terms starting with “${letter}”`;
+            displayTerms();
+        }
+
+        function searchTerms(searchTerm) {
+            currentSearch = searchTerm.toLowerCase().trim();
+            if (currentSearch) {
+                searchCount++;
+                searchCountEl.textContent = searchCount;
+            }
+
+            // if search active, reset letter filter to 'all' visually
+            if (currentSearch) {
+                currentFilter = 'all';
+                document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.letter-btn[data-letter="all"]').classList.add('active');
+                sectionTitle.textContent = `🔎 Search: "${searchTerm}"`;
+                lastLetterEl.textContent = '-';
+            } else {
+                // if search cleared, show all
+                currentFilter = 'all';
+                document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.letter-btn[data-letter="all"]').classList.add('active');
+                sectionTitle.textContent = '📘 All Terms';
+            }
+            displayTerms();
+        }
+
+        function displayTerms() {
+            let filtered = [...glossaryData];
+
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(item => getFirstLetter(item) === currentFilter);
+            }
+
+            if (currentSearch) {
+                filtered = filtered.filter(item => 
+                    item.term.toLowerCase().includes(currentSearch) || 
+                    item.definition.toLowerCase().includes(currentSearch)
+                );
+            }
+
+            visibleTermsEl.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                termsList.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            termsList.style.display = 'flex';
+            noResults.style.display = 'none';
+            termsList.innerHTML = '';
+
+            filtered.forEach(item => {
+                const firstLetter = getFirstLetter(item);
+                const div = document.createElement('div');
+                div.className = 'term-item';
+                div.innerHTML = `
+                    <div class="term-name">
+                        <span class="term-letter">${firstLetter}</span>
+                        <span>${item.term}</span>
+                    </div>
+                    <div class="term-definition">${item.definition}</div>
+                `;
+                termsList.appendChild(div);
+            });
+        }
+
+        function resetAll() {
+            currentFilter = 'all';
+            currentSearch = '';
+            searchInput.value = '';
+            lastLetterViewed = '-';
+            lastLetterEl.textContent = '-';
+
+            document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.letter-btn[data-letter="all"]').classList.add('active');
+            sectionTitle.textContent = '📘 All Terms';
+            displayTerms();
+        }
+
+        function setupListeners() {
+            searchInput.addEventListener('input', (e) => searchTerms(e.target.value));
+            clearSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchTerms('');
+                searchInput.focus();
+            });
+            resetBtn.addEventListener('click', resetAll);
+
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    searchTerms('');
+                    searchInput.blur();
+                }
+            });
+        }
+
+        function init() {
+            totalTermsEl.textContent = glossaryData.length;
+            visibleTermsEl.textContent = glossaryData.length;
+            searchCountEl.textContent = '0';
+            lastLetterEl.textContent = '-';
+            buildAlphabetNav();
+            displayTerms();
+            setupListeners();
+        }
+
+        init();
+    </script>
+</body>
+</html>

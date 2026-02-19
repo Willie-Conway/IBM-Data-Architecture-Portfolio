@@ -1,0 +1,44 @@
+
+┌───────────────────┐         ┌───────────────────┐         ┌───────────────────┐
+│     offices       │         │    employees      │         │    customers      │
+├───────────────────┤         ├───────────────────┤         ├───────────────────┤
+│ PK officeCode     │◄────┐   │ PK employeeNumber │──┐      │ PK customerNumber │
+│ city              │     └───┤ FK officeCode     │  │      │ customerName      │
+│ phone             │         │ lastName          │  │      │ contactFirstName  │
+│ addressLine1      │         │ firstName         │  │      │ contactLastName   │
+│ addressLine2      │         │ extension         │  │      │ phone             │
+│ state             │         │ email             │  │      │ addressLine1      │
+│ country           │         │ FK reportsTo      │──┘      │ addressLine2      │
+│ postalCode        │         │ jobTitle          │         │ city              │
+│ territory         │         └───────────────────┘         │ state             │
+└───────────────────┘                                       │ postalCode        │
+                                                             │ country           │
+                                                             │ FK salesRepEmployee│
+                                                             │ creditLimit       │
+                                                             └─────────┬─────────┘
+                                                                       │
+                                                                       │
+┌───────────────────┐         ┌───────────────────┐         ┌─────────┴─────────┐
+│    products       │         │     orders        │         │    payments       │
+├───────────────────┤         ├───────────────────┤         ├───────────────────┤
+│ PK productCode    │         │ PK orderNumber    │         │ FK customerNumber │
+│ productName       │         │ orderDate         │         │ checkNumber       │
+│ productLine       │◄───┐    │ requiredDate      │         │ paymentDate       │
+│ productScale      │    │    │ shippedDate       │         │ amount            │
+│ productVendor     │    │    │ status            │         └───────────────────┘
+│ productDescription│    │    │ comments          │
+│ quantityInStock   │    │    │ FK customerNumber │◄────────┘
+│ buyPrice          │    │    └─────────┬─────────┘
+│ MSRP              │    │              │
+└─────────┬─────────┘    │              │
+          │              │              │
+          │              │              │
+┌─────────┴─────────┐    │   ┌──────────▼──────────┐
+│   orderdetails    │    │   │   productlines       │
+├───────────────────┤    │   ├──────────────────────┤
+│ FK orderNumber    │◄───┘   │ PK productLine       │
+│ FK productCode    │◄───────┤ textDescription      │
+│ quantityOrdered   │        │ htmlDescription      │
+│ priceEach         │        │ image                │
+│ orderLineNumber   │        └──────────────────────┘
+└───────────────────┘

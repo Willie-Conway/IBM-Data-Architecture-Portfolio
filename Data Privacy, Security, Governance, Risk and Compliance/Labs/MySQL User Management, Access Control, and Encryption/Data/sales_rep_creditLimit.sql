@@ -1,0 +1,1 @@
+GRANT SELECT, INSERT, UPDATE (`customerNumber`, `customerName`, `contactLastName`, `contactFirstName`, `phone`, `addressLine1`, `addressLine2`, `city`, `state`, `postalCode`, `country`, `salesRepEmployeeNumber`), REFERENCES ON `customerorders`.`customers` TO 'sales_rep'@'%'; ALTER USER 'sales_rep'@'%' ;
