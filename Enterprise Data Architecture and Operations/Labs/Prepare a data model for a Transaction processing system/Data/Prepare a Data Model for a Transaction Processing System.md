@@ -1,3 +1,6 @@
+
+![Logo](<Alliance Bank.png>)
+
 # Lab: Prepare a Data Model for a Transaction Processing System
 
 ## Estimated time: 30 minutes
@@ -478,7 +481,7 @@ For each entity, list the key attributes inside the rectangle beneath the entity
 │ Manager_ID (FK)     │───▶│ Supervisor_ID (FK)  │  
 │ Status              │    │ Status              │  
 └─────────────────────┘    └─────────────────────┘  
-                                                           
+                                                         
 ┌─────────────────────┐
 │     CURRENCY        │
 ├─────────────────────┤
