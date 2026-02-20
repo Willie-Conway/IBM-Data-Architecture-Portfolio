@@ -1,3 +1,5 @@
+![Logo](../Screenshots/FinEdge.png)
+
 # Lab: Prepare a Flowchart for the Consolidation of Data Infrastructure
 
 ## Estimated time: 30 minutes
