@@ -1,3 +1,7 @@
+
+
+![Logo](<../Screenshots/FinHub bank.png>)
+
 # Lab: Redesign a Schema Designed for OLTP and Modify It to Suit OLAP
 
 ## Estimated time: 30 minutes

@@ -1,3 +1,7 @@
+
+![Logo](<../Screenshots/Garment Manufacturing Supply Chain.png>)
+
+
 # Lab: Create an EDA Blueprint
 
 ## Estimated time: 30 minutes

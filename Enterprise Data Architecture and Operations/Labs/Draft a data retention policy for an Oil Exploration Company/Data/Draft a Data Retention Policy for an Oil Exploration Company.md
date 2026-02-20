@@ -1,3 +1,5 @@
+![Logo](<../Screenshots/PetroQuest Energy.png>)
+
 # Lab: Draft a Data Retention Policy for an Oil Exploration Company
 
 ## Estimated time: 30 minutes
