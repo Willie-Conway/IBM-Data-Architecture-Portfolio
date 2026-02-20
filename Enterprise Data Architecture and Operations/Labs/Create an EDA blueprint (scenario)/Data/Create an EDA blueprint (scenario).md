@@ -1,6 +1,4 @@
-
-![Logo](<../Screenshots/Garment Manufacturing Supply Chain.png>)
-
+![Logo](../Screenshots/Garment Manufacturing Supply Chain.png)
 
 # Lab: Create an EDA Blueprint
 
@@ -111,15 +109,15 @@ Identify the specific data requirements for optimizing supply chain operations f
 
 ### Step 3: Outline the data compliance standards and regulations that must be followed
 
-| Data Compliance Requirements                                          | Description                                                                                                                                                                                                      |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **GDPR**                                                        | • Applies if the company handles personal data of EU citizens`<br>`• Ensure data minimization, lawful processing, and user consent`<br>`• Provide mechanisms for data access, rectification, and deletion |
-| **CCPA**                                                        | • Protects data privacy of California residents`<br>`• Enables users to opt out of data sales and request data access or deletion                                                                            |
-| **Environmental, Social, and Governance (ESG) Regulations**     | • Monitor and report sustainability data in supply chain operations`<br>`• Track carbon emissions, fair labor practices, ethical sourcing                                                                    |
-| **ISO 27001**                                                   | • Implements an Information Security Management System (ISMS) to protect sensitive data                                                                                                                         |
-| **Industry-Specific Regulations**                               | • Textile industry standards for material safety`<br>`• Import/export documentation requirements                                                                                                             |
-| **GDPR**                                                        | • Applies if the company handles personal data of EU citizens`<br>`• Ensure data minimization, lawful processing, and user consent`<br>`• Provide mechanisms for data access, rectification, and deletion |
-| **Health Insurance Portability and Accountability Act (HIPAA)** | • Relevant if healthcare-related goods (e.g., medical textiles) are shipped`<br>`• Safeguard sensitive health information                                                                                    |
+| Data Compliance Requirements                                          | Description                                                                                                                                                                                                        |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **GDPR**                                                        | • Applies if the company handles personal data of EU citizens `<br>`• Ensure data minimization, lawful processing, and user consent `<br>`• Provide mechanisms for data access, rectification, and deletion |
+| **CCPA**                                                        | • Protects data privacy of California residents `<br>`• Enables users to opt out of data sales and request data access or deletion                                                                             |
+| **Environmental, Social, and Governance (ESG) Regulations**     | • Monitor and report sustainability data in supply chain operations `<br>`• Track carbon emissions, fair labor practices, ethical sourcing                                                                     |
+| **ISO 27001**                                                   | • Implements an Information Security Management System (ISMS) to protect sensitive data                                                                                                                           |
+| **Industry-Specific Regulations**                               | • Textile industry standards for material safety `<br>`• Import/export documentation requirements                                                                                                              |
+| **GDPR**                                                        | • Applies if the company handles personal data of EU citizens `<br>`• Ensure data minimization, lawful processing, and user consent `<br>`• Provide mechanisms for data access, rectification, and deletion |
+| **Health Insurance Portability and Accountability Act (HIPAA)** | • Relevant if healthcare-related goods (e.g., medical textiles) are shipped `<br>`• Safeguard sensitive health information                                                                                     |
 
 ---
 
@@ -131,64 +129,64 @@ Identify and categorize all internal and external data sources for the garment m
 
 | Data Source Type   | Examples                                                                                                                                                                                                                                                                                                                                                                          |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Internal** | • ERP System (SAP, Oracle)`<br>`• Warehouse Management System (WMS)`<br>`• Inventory Management Database`<br>`• Order Processing System`<br>`• Quality Control Records`<br>`• Transportation Management System`<br>`• Production Logs                                                                                                                          |
+| **Internal** | • ERP System (SAP, Oracle)`<br>`• Warehouse Management System (WMS)`<br>`• Inventory Management Database `<br>`• Order Processing System `<br>`• Quality Control Records `<br>`• Transportation Management System `<br>`• Production Logs                                                                                                                      |
 | **External** | • Supplier APIs (real-time inventory from cotton suppliers)`<br>`• Weather Data APIs (affecting crop yields and shipping)`<br>`• Market Trends Data (commodity prices for cotton, synthetic fibers)`<br>`• Shipping Carrier APIs (FedEx, DHL, Maersk tracking)`<br>`• Regulatory Databases (customs, trade tariffs)`<br>`• Sustainability Certification Databases |
 
 ### Step 2: Data Ingestion
 
 Establish the data ingestion methods for capturing data from various sources.
 
-| Ingestion Method                    | Description                                           | Examples                                                                                                               | Tools                                                     |
-| ----------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| **Batch Ingestion**           | Processes data at scheduled intervals                 | • Daily supplier inventory reports`<br>`• Weekly financial updates`<br>`• Monthly supplier performance reviews  | Apache Kafka, AWS Kinesis, Talend, Apache NiFi            |
-| **Real-time Ingestion**       | Captures and processes data dynamically as it arrives | • IoT sensors in transportation vehicles`<br>`• Real-time shipment tracking`<br>`• Live inventory level updates | Apache Kafka, AWS Kinesis, Apache Flume, Azure Event Hubs |
-| **Change Data Capture (CDC)** | Captures changes in databases in real-time            | • Database updates in ERP system`<br>`• New orders in Order Management System                                      | Debezium, AWS DMS, Oracle GoldenGate                      |
+| Ingestion Method                    | Description                                           | Examples                                                                                                                 | Tools                                                     |
+| ----------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| **Batch Ingestion**           | Processes data at scheduled intervals                 | • Daily supplier inventory reports `<br>`• Weekly financial updates `<br>`• Monthly supplier performance reviews  | Apache Kafka, AWS Kinesis, Talend, Apache NiFi            |
+| **Real-time Ingestion**       | Captures and processes data dynamically as it arrives | • IoT sensors in transportation vehicles `<br>`• Real-time shipment tracking `<br>`• Live inventory level updates | Apache Kafka, AWS Kinesis, Apache Flume, Azure Event Hubs |
+| **Change Data Capture (CDC)** | Captures changes in databases in real-time            | • Database updates in ERP system `<br>`• New orders in Order Management System                                       | Debezium, AWS DMS, Oracle GoldenGate                      |
 
 ### Step 3: Data Storage
 
 Define the data storage types for the supply chain data architecture.
 
-| Storage Type                   | Purpose                                          | Examples                                                                                         |
-| ------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| **Data Lake**            | Stores raw, unprocessed data in native format    | • Hadoop HDFS`<br>`• AWS S3`<br>`• Azure Data Lake Storage`<br>`• Google Cloud Storage |
-| **Data Warehouse**       | Stores structured, analytical data for reporting | • Snowflake`<br>`• Google BigQuery`<br>`• Amazon Redshift`<br>`• Azure Synapse         |
-| **Operational Database** | Supports day-to-day transaction processing       | • PostgreSQL`<br>`• MySQL`<br>`• MongoDB                                                  |
-| **Data Mart**            | Department-specific data subsets                 | • Finance Data Mart`<br>`• Procurement Data Mart`<br>`• Logistics Data Mart               |
-| **Archive Storage**      | Stores historical data for long-term retention   | • AWS S3 Glacier`<br>`• Azure Archive Storage`<br>`• IBM Cloud Object Storage             |
+| Storage Type                   | Purpose                                          | Examples                                                                                            |
+| ------------------------------ | ------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| **Data Lake**            | Stores raw, unprocessed data in native format    | • Hadoop HDFS `<br>`• AWS S3 `<br>`• Azure Data Lake Storage `<br>`• Google Cloud Storage |
+| **Data Warehouse**       | Stores structured, analytical data for reporting | • Snowflake `<br>`• Google BigQuery `<br>`• Amazon Redshift `<br>`• Azure Synapse         |
+| **Operational Database** | Supports day-to-day transaction processing       | • PostgreSQL `<br>`• MySQL `<br>`• MongoDB                                                   |
+| **Data Mart**            | Department-specific data subsets                 | • Finance Data Mart `<br>`• Procurement Data Mart `<br>`• Logistics Data Mart                |
+| **Archive Storage**      | Stores historical data for long-term retention   | • AWS S3 Glacier `<br>`• Azure Archive Storage `<br>`• IBM Cloud Object Storage              |
 
 ### Step 4: Data Processing
 
 Define the data processing methods for transforming raw data into actionable insights.
 
-| Processing Method           | Description                                          | Examples/Tools                                                                                                             |
-| --------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **ETL/ELT Pipelines** | Transform raw data for further analysis              | • Apache Spark`<br>`• Talend`<br>`• AWS Glue`<br>`• Microsoft Azure Data Factory`<br>`• dbt (data build tool) |
-| **Stream Processing** | Process data in real time for immediate use          | • Apache Flink`<br>`• Apache Kafka Streams`<br>`• Spark Streaming`<br>`• Azure Stream Analytics                  |
-| **Batch Processing**  | Process large volumes of data at scheduled intervals | • Apache Hadoop MapReduce`<br>`• AWS Batch`<br>`• Google Cloud Dataflow                                             |
+| Processing Method           | Description                                          | Examples/Tools                                                                                                                 |
+| --------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **ETL/ELT Pipelines** | Transform raw data for further analysis              | • Apache Spark `<br>`• Talend `<br>`• AWS Glue `<br>`• Microsoft Azure Data Factory `<br>`• dbt (data build tool) |
+| **Stream Processing** | Process data in real time for immediate use          | • Apache Flink `<br>`• Apache Kafka Streams `<br>`• Spark Streaming `<br>`• Azure Stream Analytics                   |
+| **Batch Processing**  | Process large volumes of data at scheduled intervals | • Apache Hadoop MapReduce `<br>`• AWS Batch `<br>`• Google Cloud Dataflow                                               |
 
 ### Step 5: Analytics
 
 Identify and report business intelligence capabilities for supply chain optimization.
 
-| Analytics Type                   | Description                                                                             | Examples/Use Cases                                                                                                                       | Tools                                                 |
-| -------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| **Dashboards**             | Visualize key metrics such as inventory levels, supplier performance, and cost analysis | • Inventory turnover dashboard`<br>`• Supplier scorecard`<br>`• Cost analysis by material type`<br>`• On-time delivery metrics | Tableau, Power BI, Looker, Qlik                       |
-| **Predictive Analytics**   | Use historical data to forecast future demand                                           | • Raw material demand forecasting`<br>`• Supplier delivery delay prediction`<br>`• Price trend analysis                           | Python (scikit-learn), R, SAS, Azure Machine Learning |
-| **Prescriptive Analytics** | Recommend optimal actions based on data                                                 | • Route optimization suggestions`<br>`• Inventory reorder recommendations`<br>`• Supplier selection optimization                  | IBM CPLEX, Gurobi, OptaPlanner                        |
-| **Ad-hoc Reporting**       | Custom reports for specific business questions                                          | • Impact of weather on shipping delays`<br>`• Supplier quality trend analysis                                                        | SQL, Excel, Jupyter Notebooks                         |
+| Analytics Type                   | Description                                                                             | Examples/Use Cases                                                                                                                          | Tools                                                 |
+| -------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| **Dashboards**             | Visualize key metrics such as inventory levels, supplier performance, and cost analysis | • Inventory turnover dashboard `<br>`• Supplier scorecard `<br>`• Cost analysis by material type `<br>`• On-time delivery metrics | Tableau, Power BI, Looker, Qlik                       |
+| **Predictive Analytics**   | Use historical data to forecast future demand                                           | • Raw material demand forecasting `<br>`• Supplier delivery delay prediction `<br>`• Price trend analysis                            | Python (scikit-learn), R, SAS, Azure Machine Learning |
+| **Prescriptive Analytics** | Recommend optimal actions based on data                                                 | • Route optimization suggestions `<br>`• Inventory reorder recommendations `<br>`• Supplier selection optimization                   | IBM CPLEX, Gurobi, OptaPlanner                        |
+| **Ad-hoc Reporting**       | Custom reports for specific business questions                                          | • Impact of weather on shipping delays `<br>`• Supplier quality trend analysis                                                          | SQL, Excel, Jupyter Notebooks                         |
 
 ### Step 6: Data Governance
 
 Define the data governance tasks to ensure data quality, security, and compliance.
 
-| Governance Task                        | Description                                                           | Examples/Tools                                                                                |
-| -------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **Data Ownership & Stewardship** | Define roles and responsibilities for data management                 | • Collibra`<br>`• Alation`<br>`• Informatica Axon                                      |
-| **Data Quality Management**      | Monitor and improve data accuracy, completeness, and consistency      | • Talend Data Quality`<br>`• Great Expectations`<br>`• Apache Griffin                  |
-| **Access Policies**              | Establish guidelines for who can access the data                      | • Okta`<br>`• Immuta`<br>`• AWS IAM`<br>`• Azure Active Directory                   |
-| **Compliance & Audit**           | Ensure data usage complies with regulations and maintain audit trails | • AWS Audit Manager`<br>`• IBM OpenPages with Watson`<br>`• OneTrust                   |
-| **Data Lineage**                 | Track data flow from source to consumption                            | • Apache Atlas`<br>`• Marquez`<br>`• Collibra Lineage                                  |
-| **Master Data Management (MDM)** | Create single source of truth for critical data entities              | • Supplier master data`<br>`• Product/material master data`<br>`• Customer master data |
+| Governance Task                        | Description                                                           | Examples/Tools                                                                                  |
+| -------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Data Ownership & Stewardship** | Define roles and responsibilities for data management                 | • Collibra `<br>`• Alation `<br>`• Informatica Axon                                      |
+| **Data Quality Management**      | Monitor and improve data accuracy, completeness, and consistency      | • Talend Data Quality `<br>`• Great Expectations `<br>`• Apache Griffin                  |
+| **Access Policies**              | Establish guidelines for who can access the data                      | • Okta `<br>`• Immuta `<br>`• AWS IAM `<br>`• Azure Active Directory                  |
+| **Compliance & Audit**           | Ensure data usage complies with regulations and maintain audit trails | • AWS Audit Manager `<br>`• IBM OpenPages with Watson `<br>`• OneTrust                   |
+| **Data Lineage**                 | Track data flow from source to consumption                            | • Apache Atlas `<br>`• Marquez `<br>`• Collibra Lineage                                  |
+| **Master Data Management (MDM)** | Create single source of truth for critical data entities              | • Supplier master data `<br>`• Product/material master data `<br>`• Customer master data |
 
 ---
 
