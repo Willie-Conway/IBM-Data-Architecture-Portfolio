@@ -1,0 +1,207 @@
+MONGODB DATABASE ANALYSIS: product_catalog
+Generated on: 2026-02-21 03:55:51.239326
+Total collections: 1
+
+
+================================================================================
+COLLECTION: products
+================================================================================
+Document count: 25
+
+Schema Information:
+----------------------------------------
+product_id: int
+name: str
+description: str
+gender: str
+material: str
+season: str
+created_at: datetime
+updated_at: datetime
+brand: dict
+category: dict
+attributes: list
+variants: list
+
+Sample Documents (first 5):
+----------------------------------------
+Document 1:
+{
+  "_id": "699973173afb76462a4451fb",
+  "product_id": 1,
+  "name": "Nike Sports T-Shirt",
+  "description": "Breathable fabric for sports",
+  "gender": "Men",
+  "material": "Polyester",
+  "season": "All",
+  "created_at": "2026-02-21T08:50:22",
+  "updated_at": "2026-02-21T08:50:22",
+  "brand": {
+    "brand_id": 1,
+    "name": "Nike"
+  },
+  "category": {
+    "category_id": 4,
+    "name": "T-Shirts"
+  },
+  "attributes": [],
+  "variants": [
+    {
+      "variant_id": 1,
+      "sku": "SKU001",
+      "color": "Black",
+      "size": "M",
+      "price": 29.99,
+      "discounted_price": 24.99,
+      "stock_quantity": 50,
+      "images": []
+    },
+    {
+      "variant_id": 2,
+      "sku": "SKU002",
+      "color": "Blue",
+      "size": "L",
+      "price": 29.99,
+      "discounted_price": null,
+      "stock_quantity": 30,
+      "images": []
+    }
+  ]
+}
+
+Document 2:
+{
+  "_id": "699973173afb76462a4451fc",
+  "product_id": 2,
+  "name": "Adidas Running Shoes",
+  "description": "Comfortable running shoes",
+  "gender": "Men",
+  "material": "Mesh",
+  "season": "All",
+  "created_at": "2026-02-21T08:50:22",
+  "updated_at": "2026-02-21T08:50:22",
+  "brand": {
+    "brand_id": 2,
+    "name": "Adidas"
+  },
+  "category": {
+    "category_id": 10,
+    "name": "Shoes"
+  },
+  "attributes": [],
+  "variants": [
+    {
+      "variant_id": 3,
+      "sku": "SKU003",
+      "color": "White",
+      "size": "10",
+      "price": 89.99,
+      "discounted_price": 79.99,
+      "stock_quantity": 20,
+      "images": []
+    }
+  ]
+}
+
+Document 3:
+{
+  "_id": "699973173afb76462a4451fd",
+  "product_id": 3,
+  "name": "Puma Slim Fit Jeans",
+  "description": "Stylish slim fit jeans",
+  "gender": "Men",
+  "material": "Denim",
+  "season": "All",
+  "created_at": "2026-02-21T08:50:22",
+  "updated_at": "2026-02-21T08:50:22",
+  "brand": {
+    "brand_id": 3,
+    "name": "Puma"
+  },
+  "category": {
+    "category_id": 5,
+    "name": "Jeans"
+  },
+  "attributes": [],
+  "variants": [
+    {
+      "variant_id": 4,
+      "sku": "SKU004",
+      "color": "Dark Blue",
+      "size": "32",
+      "price": 49.99,
+      "discounted_price": 44.99,
+      "stock_quantity": 40,
+      "images": []
+    }
+  ]
+}
+
+Document 4:
+{
+  "_id": "699973173afb76462a4451fe",
+  "product_id": 4,
+  "name": "Levis Denim Jacket",
+  "description": "Classic denim jacket",
+  "gender": "Men",
+  "material": "Denim",
+  "season": "Fall",
+  "created_at": "2026-02-21T08:50:22",
+  "updated_at": "2026-02-21T08:50:22",
+  "brand": {
+    "brand_id": 4,
+    "name": "Levis"
+  },
+  "category": {
+    "category_id": 6,
+    "name": "Jackets"
+  },
+  "attributes": [],
+  "variants": [
+    {
+      "variant_id": 5,
+      "sku": "SKU005",
+      "color": "Light Blue",
+      "size": "M",
+      "price": 79.99,
+      "discounted_price": null,
+      "stock_quantity": 25,
+      "images": []
+    }
+  ]
+}
+
+Document 5:
+{
+  "_id": "699973173afb76462a4451ff",
+  "product_id": 5,
+  "name": "H&M Casual Dress",
+  "description": "Elegant evening wear",
+  "gender": "Women",
+  "material": "Cotton",
+  "season": "Summer",
+  "created_at": "2026-02-21T08:50:22",
+  "updated_at": "2026-02-21T08:50:22",
+  "brand": {
+    "brand_id": 5,
+    "name": "H&M"
+  },
+  "category": {
+    "category_id": 7,
+    "name": "Dresses"
+  },
+  "attributes": [],
+  "variants": [
+    {
+      "variant_id": 6,
+      "sku": "SKU006",
+      "color": "Red",
+      "size": "S",
+      "price": 39.99,
+      "discounted_price": 34.99,
+      "stock_quantity": 50,
+      "images": []
+    }
+  ]
+}
+

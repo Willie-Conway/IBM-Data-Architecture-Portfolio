@@ -1,0 +1,46 @@
+MySQL Database Validation Report
+Generated on: 2026-02-21 03:58:43
+================================================================================
+
+1. DATABASE EXISTENCE CHECK
+--------------------------------------------------------------------------------
+Database 'product_returns' exists: True
+
+2. TABLE EXISTENCE CHECK
+--------------------------------------------------------------------------------
+Table 'details' exists: True
+
+3. TABLE STRUCTURE
+--------------------------------------------------------------------------------
+Field                Type                 Null                 Key                  Default              Extra               
+------------------------------------------------------------------------------------------------------------------------
+return_detail_id     int                  NO                   PRI                  NULL                 auto_increment      
+mongo_id             varchar(24)          NO                   UNI                  NULL                                     
+product_id           int                  YES                                       NULL                                     
+variant_sku          varchar(100)         YES                                       NULL                                     
+reason               text                 YES                                       NULL                                     
+return_date          date                 YES                                       NULL                                     
+
+4. ROW COUNT
+--------------------------------------------------------------------------------
+Number of rows in the table 'details': 50
+
+5. TABLE DATA
+--------------------------------------------------------------------------------
+return_detail_id | mongo_id | product_id | variant_sku | reason | return_date
+-----------------------------------------------------------------------------
+1 | 6999736f316042ae99ebac40 | 1000 | MSFJ-32-IND | Item arrived late | 2025-04-04
+2 | 6999736f316042ae99ebac41 | 1001 | WCTS-M-BLK | Looks different than picture | 2025-04-05
+3 | 6999736f316042ae99ebac42 | 1002 | UH-L-GRY | Item damaged on arrival | 2025-04-08
+4 | 6999736f316042ae99ebac43 | 1003 | KRJ-XS-YLW | Item arrived late | 2025-04-20
+5 | 6999736f316042ae99ebac44 | 1004 | MFS-40-WHT | Item arrived late | 2025-04-12
+6 | 6999736f316042ae99ebac45 | 1005 | WMD-L-RED | Item damaged on arrival | 2025-04-18
+7 | 6999736f316042ae99ebac46 | 1006 | MRS-M-NVY | Ordered by mistake | 2025-04-07
+8 | 6999736f316042ae99ebac47 | 1007 | WSB-S-PNK | Wrong item delivered | 2025-04-16
+9 | 6999736f316042ae99ebac48 | 1008 | KPS-4T-GRN | Wrong item delivered | 2025-04-17
+10 | 6999736f316042ae99ebac49 | 1009 | MLJ-XL-BRN | Too expensive | 2025-04-14
+
+[Note: 40 more rows exist but are not displayed in this report.]
+
+================================================================================
+Validation complete. Results saved to nosql2rdbms.txt

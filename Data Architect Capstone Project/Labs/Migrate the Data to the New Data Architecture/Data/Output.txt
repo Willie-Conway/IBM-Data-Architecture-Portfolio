@@ -1,0 +1,191 @@
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/zAjsXWY5_32IwexYkhzrAw/initialize-mysqldb.py
+--2026-02-21 03:47:46--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/zAjsXWY5_32IwexYkhzrAw/initialize-mysqldb.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7753 (7.6K) [application/x-python]
+Saving to: 'initialize-mysqldb.py'
+
+initialize-mysqldb.py  100%[===========================>]   7.57K  --.-KB/s    in 0s      
+
+2026-02-21 03:47:46 (134 MB/s) - 'initialize-mysqldb.py' saved [7753/7753]
+
+theia@theiadocker-hirewillieco:/home/project$ python3 -m pip install mysql-connector-python pymongo 
+Defaulting to user installation because normal site-packages is not writeable
+Collecting mysql-connector-python
+  Downloading mysql_connector_python-9.6.0-cp310-cp310-manylinux_2_28_x86_64.whl (34.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.5/34.5 MB 11.5 MB/s eta 0:00:00
+Collecting pymongo
+  Downloading pymongo-4.16.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 28.0 MB/s eta 0:00:00
+Collecting dnspython<3.0.0,>=2.6.1
+  Downloading dnspython-2.8.0-py3-none-any.whl (331 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 331.1/331.1 KB 19.8 MB/s eta 0:00:00
+Installing collected packages: mysql-connector-python, dnspython, pymongo
+Successfully installed dnspython-2.8.0 mysql-connector-python-9.6.0 pymongo-4.16.0
+theia@theiadocker-hirewillieco:/home/project$ python3 initialize-mysqldb.py 
+Enter MySQL host: root
+Enter MySQL username: root
+Enter MySQL password: Traceback (most recent call last):
+  File "/home/project/initialize-mysqldb.py", line 176, in <module>
+    password = getpass.getpass("Enter MySQL password: ")
+  File "/usr/lib/python3.10/getpass.py", line 77, in unix_getpass
+    passwd = _raw_input(prompt, stream, input=input)
+  File "/usr/lib/python3.10/getpass.py", line 146, in _raw_input
+    line = input.readline()
+KeyboardInterrupt
+
+theia@theiadocker-hirewillieco:/home/project$ python3 initialize-mysqldb.py 
+Enter MySQL host: 172.21.84.170
+Enter MySQL username: root
+Enter MySQL password: 
+Your mysql server is now initialized. You can get started with the lab.
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/CS4WZfaShihm74lUk4JYeg/mysql2mongo-lab-check.py
+--2026-02-21 03:50:34--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/CS4WZfaShihm74lUk4JYeg/mysql2mongo-lab-check.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12000 (12K) [application/x-python]
+Saving to: 'mysql2mongo-lab-check.py'
+
+mysql2mongo-lab-check. 100%[===========================>]  11.72K  --.-KB/s    in 0s      
+
+2026-02-21 03:50:34 (215 MB/s) - 'mysql2mongo-lab-check.py' saved [12000/12000]
+
+theia@theiadocker-hirewillieco:/home/project$ theia@theiadocker-hirewillieco:/home/project$
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/zAjsXWY5_32IwexYkhzrAw/initialize-mysqldb.py
+--2026-02-21 03:47:46--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/zAjsXWY5_32IwexYkhzrAw/initialize-mysqldb.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7753 (7.6K) [application/x-python]
+Saving to: 'initialize-mysqldb.py'
+
+initialize-mysqldb.py  100%[===========================>]   7.57K  --.-KB/s    in 0s      
+
+2026-02-21 03:47:46 (134 MB/s) - 'initialize-mysqldb.py' saved [7753/7753]
+
+theia@theiadocker-hirewillieco:/home/project$ python3 -m pip install mysql-connector-python pymongo 
+Defaulting to user installation because normal site-packages is not writeable
+Collecting mysql-connector-python
+  Downloading mysql_connector_python-9.6.0-cp310-cp310-manylinux_2_28_x86_64.whl (34.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.5/34.5 MB 11.5 MB/s eta 0:00:00
+Collecting pymongo
+  Downloading pymongo-4.16.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 28.0 MB/s eta 0:00:00
+Collecting dnspython<3.0.0,>=2.6.1
+  Downloading dnspython-2.8.0-py3-none-any.whl (331 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 331.1/331.1 KB 19.8 MB/s eta 0:00:00
+Installing collected packages: mysql-connector-python, dnspython, pymongo
+Successfully installed dnspython-2.8.0 mysql-connector-python-9.6.0 pymongo-4.16.0
+theia@theiadocker-hirewillieco:/home/project$ python3 initialize-mysqldb.py 
+Enter MySQL host: root
+Enter MySQL username: root
+Enter MySQL password: Traceback (most recent call last):
+  File "/home/project/initialize-mysqldb.py", line 176, in <module>
+    password = getpass.getpass("Enter MySQL password: ")
+  File "/usr/lib/python3.10/getpass.py", line 77, in unix_getpass
+    passwd = _raw_input(prompt, stream, input=input)
+  File "/usr/lib/python3.10/getpass.py", line 146, in _raw_input
+    line = input.readline()
+KeyboardInterrupt
+
+theia@theiadocker-hirewillieco:/home/project$ python3 initialize-mysqldb.py 
+Enter MySQL host: 172.21.84.170
+Enter MySQL username: root
+Enter MySQL password: 
+Your mysql server is now initialized. You can get started with the lab.
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/CS4WZfaShihm74lUk4JYeg/mysql2mongo-lab-check.py
+--2026-02-21 03:50:34--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/CS4WZfaShihm74lUk4JYeg/mysql2mongo-lab-check.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12000 (12K) [application/x-python]
+Saving to: 'mysql2mongo-lab-check.py'
+
+mysql2mongo-lab-check. 100%[===========================>]  11.72K  --.-KB/s    in 0s      
+
+2026-02-21 03:50:34 (215 MB/s) - 'mysql2mongo-lab-check.py' saved [12000/12000]
+
+theia@theiadocker-hirewillieco:/home/project$ python3 mysql2mongo-lab-check.py 
+
+--- MongoDB Connection ---
+Make sure your mongodb server is running.
+Enter mongodb username: root
+Enter mongodb password: 
+Enter mongodb hostname: 172.21.101.194
+
+--- MySQL Connection (Required for Migration) ---
+Enter mysql username: root
+Enter mysql password: 
+Enter mysql hostname: 172.21.84.170
+Enter mysql database name (e.g., product_catalog): product_catalog
+
+--- Starting Data Migration ---
+Cleaned up existing 'product_catalog' database in MongoDB.
+Fetched 6 brands.
+Fetched 12 categories.
+Fetched 0 product attribute associations.
+Fetched images for 0 variants.
+Fetched variants for 25 products.
+Starting main product denormalization...
+Successfully migrated 25 documents to 'products' collection.
+Data migration routine finished.
+
+--- Starting MongoDB Analysis ---
+Connected successfully to MongoDB server!
+
+Analysis complete! Results saved to rdbms2nosql.txt
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/sEYK9WTXN6K6Ho3aKhCmpw/initialize-mongodb.py
+--2026-02-21 03:56:21--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/sEYK9WTXN6K6Ho3aKhCmpw/initialize-mongodb.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 11750 (11K) [application/x-python]
+Saving to: 'initialize-mongodb.py'
+
+initialize-mongodb.py  100%[===========================>]  11.47K  --.-KB/s    in 0s      
+
+2026-02-21 03:56:21 (221 MB/s) - 'initialize-mongodb.py' saved [11750/11750]
+
+theia@theiadocker-hirewillieco:/home/project$ python3 -m pip install mysql-connector-python pymongo 
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: mysql-connector-python in /home/theia/.local/lib/python3.10/site-packages (9.6.0)
+Requirement already satisfied: pymongo in /home/theia/.local/lib/python3.10/site-packages (4.16.0)
+Requirement already satisfied: dnspython<3.0.0,>=2.6.1 in /home/theia/.local/lib/python3.10/site-packages (from pymongo) (2.8.0)
+theia@theiadocker-hirewillieco:/home/project$ python3 initialize-mongodb.py 
+Enter MongoDB username: root
+Enter MongoDB password: 
+Enter MongoDB server hostname: 172.21.101.194
+Data inserted successfully into 'product_returns.details'.
+You can proceed with your lab now.
+theia@theiadocker-hirewillieco:/home/project$ wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/WpwvD4SopTBr3K7yIEWDWA/mongo2mysql-lab-check.py
+--2026-02-21 03:57:32--  https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/WpwvD4SopTBr3K7yIEWDWA/mongo2mysql-lab-check.py
+Resolving cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)... 169.63.118.104, 169.63.118.104
+Connecting to cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud (cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud)|169.63.118.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12023 (12K) [application/x-python]
+Saving to: 'mongo2mysql-lab-check.py'
+
+mongo2mysql-lab-check. 100%[===========================>]  11.74K  --.-KB/s    in 0s      
+
+2026-02-21 03:57:32 (220 MB/s) - 'mongo2mysql-lab-check.py' saved [12023/12023]
+
+theia@theiadocker-hirewillieco:/home/project$ python3 mongo2mysql-lab-check.py 
+
+--- MongoDB Connection (Source) ---
+Enter mongodb username: root
+Enter mongodb password: 
+Enter mongodb hostname: 172.21.101.194
+
+--- MySQL Connection (Target) ---
+Enter MySQL host: 172.21.84.170
+Enter MySQL username: root
+Enter MySQL password: 
+INFO: 
+--- Starting MongoDB to MySQL Migration ---
+INFO: Created table 'product_returns.details'.
+INFO: Successfully migrated 50 documents to MySQL table 'details'.
+
+Validation complete. Results saved to nosql2rdbms.txt
+theia@theiadocker-hirewillieco:/home/project$ 
