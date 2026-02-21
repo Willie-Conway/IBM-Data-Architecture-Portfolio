@@ -1,0 +1,460 @@
+# SQL Schema Definition: FutureMart OLTP Database
+
+
+-- =====================================================
+-- FUTUREMART OLTP DATABASE SCHEMA
+-- =====================================================
+-- This schema manages customers, products, orders, inventory,
+-- and fulfillment for FutureMart's omnichannel retail operations.
+-- =====================================================
+
+-- 1. OBJECTIVE
+-- Create a schema for FutureMart's OLTP system that manages customers,
+-- products, orders, inventory, and fulfillment across both online and
+-- physical retail channels. The system must support omnichannel operations
+-- and real-time inventory tracking.
+
+-- =====================================================
+-- 2. TABLES OVERVIEW
+-- =====================================================
+-- Customers: Stores customer personal information and loyalty program data
+-- Categories: Product category hierarchy for apparel classification
+-- Suppliers: Vendor information for product sourcing
+-- Products: Product catalog with apparel details (size, color, price)
+-- FulfillmentCenters: Warehouses and physical store locations
+-- Inventory: Real-time stock levels across fulfillment centers
+-- Employees: Staff who process in-store transactions
+-- Orders: Customer order header information
+-- OrderItems: Line items within each order
+-- Payments: Payment transactions for orders
+-- Returns: Product return and exchange records
+
+-- =====================================================
+-- 3. CREATE TABLE STATEMENTS
+-- =====================================================
+
+-- Create Customers table
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(20),
+    Address TEXT,
+    City VARCHAR(50),
+    State VARCHAR(50),
+    PostalCode VARCHAR(20),
+    Country VARCHAR(50) DEFAULT 'USA',
+    LoyaltyTier VARCHAR(20) DEFAULT 'Bronze',
+    RegistrationDate DATE NOT NULL,
+    DateOfBirth DATE,
+    Gender VARCHAR(20),
+    Preferences JSONB,
+    MarketingOptIn BOOLEAN DEFAULT FALSE,
+    IsActive BOOLEAN DEFAULT TRUE
+);
+
+-- Create Categories table
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL,
+    ParentCategoryID INT,
+    Description TEXT,
+    CreatedDate DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (ParentCategoryID) REFERENCES Categories(CategoryID)
+);
+
+-- Create Suppliers table
+CREATE TABLE Suppliers (
+    SupplierID INT PRIMARY KEY,
+    SupplierName VARCHAR(100) NOT NULL,
+    ContactName VARCHAR(100),
+    ContactEmail VARCHAR(100),
+    ContactPhone VARCHAR(20),
+    Address TEXT,
+    City VARCHAR(50),
+    State VARCHAR(50),
+    PostalCode VARCHAR(20),
+    Country VARCHAR(50) DEFAULT 'USA',
+    LeadTime INT, -- in days
+    PaymentTerms VARCHAR(50),
+    Rating DECIMAL(3,2),
+    IsActive BOOLEAN DEFAULT TRUE,
+    CreatedDate DATE DEFAULT CURRENT_DATE
+);
+
+-- Create Products table
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    SKU VARCHAR(50) UNIQUE NOT NULL,
+    ProductName VARCHAR(200) NOT NULL,
+    Description TEXT,
+    CategoryID INT,
+    SupplierID INT,
+    Size VARCHAR(20),
+    Color VARCHAR(50),
+    Material VARCHAR(100),
+    UnitPrice DECIMAL(10,2) NOT NULL,
+    Cost DECIMAL(10,2) NOT NULL,
+    ReorderLevel INT DEFAULT 10,
+    IsActive BOOLEAN DEFAULT TRUE,
+    CreatedDate DATE DEFAULT CURRENT_DATE,
+    LastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+
+-- Create FulfillmentCenters table
+CREATE TABLE FulfillmentCenters (
+    CenterID INT PRIMARY KEY,
+    CenterName VARCHAR(100) NOT NULL,
+    CenterType VARCHAR(30) CHECK (CenterType IN ('Warehouse', 'Store', 'Distribution Center')),
+    Address TEXT NOT NULL,
+    City VARCHAR(50),
+    State VARCHAR(50),
+    PostalCode VARCHAR(20),
+    Country VARCHAR(50) DEFAULT 'USA',
+    ContactPhone VARCHAR(20),
+    SquareFootage INT,
+    IsActive BOOLEAN DEFAULT TRUE,
+    OpenDate DATE
+);
+
+-- Create Inventory table
+CREATE TABLE Inventory (
+    InventoryID INT PRIMARY KEY,
+    ProductID INT NOT NULL,
+    CenterID INT NOT NULL,
+    QuantityAvailable INT DEFAULT 0,
+    ReservedQuantity INT DEFAULT 0,
+    ReorderLevel INT,
+    ReorderQuantity INT,
+    LastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CenterID) REFERENCES FulfillmentCenters(CenterID),
+    UNIQUE(ProductID, CenterID)
+);
+
+-- Create Employees table
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(20),
+    Role VARCHAR(50),
+    StoreID INT,
+    HireDate DATE,
+    IsActive BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (StoreID) REFERENCES FulfillmentCenters(CenterID)
+);
+
+-- Create Orders table
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    TotalAmount DECIMAL(12,2) NOT NULL,
+    Status VARCHAR(30) CHECK (Status IN ('Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Returned')),
+    PaymentStatus VARCHAR(30) CHECK (PaymentStatus IN ('Pending', 'Paid', 'Failed', 'Refunded')),
+    Channel VARCHAR(20) CHECK (Channel IN ('Web', 'App', 'In-Store', 'Phone', 'Social Media')),
+    ShippingAddress TEXT,
+    BillingAddress TEXT,
+    ShippingMethod VARCHAR(50),
+    ShippingCost DECIMAL(10,2) DEFAULT 0,
+    TaxAmount DECIMAL(10,2) DEFAULT 0,
+    DiscountAmount DECIMAL(10,2) DEFAULT 0,
+    Notes TEXT,
+    ProcessedBy INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProcessedBy) REFERENCES Employees(EmployeeID)
+);
+
+-- Create OrderItems table
+CREATE TABLE OrderItems (
+    OrderItemID INT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    UnitPrice DECIMAL(10,2) NOT NULL,
+    Discount DECIMAL(10,2) DEFAULT 0,
+    TotalPrice DECIMAL(12,2) GENERATED ALWAYS AS ((UnitPrice - Discount) * Quantity) STORED,
+    Status VARCHAR(30) DEFAULT 'Pending' CHECK (Status IN ('Pending', 'Picked', 'Packed', 'Shipped', 'Delivered', 'Cancelled')),
+    FulfilledFrom INT,
+    ShipDate DATE,
+    DeliveryDate DATE,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (FulfilledFrom) REFERENCES FulfillmentCenters(CenterID)
+);
+
+-- Create Payments table
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    Amount DECIMAL(12,2) NOT NULL,
+    PaymentMethod VARCHAR(50) CHECK (PaymentMethod IN ('Credit Card', 'Debit Card', 'PayPal', 'Gift Card', 'Store Credit', 'Cash', 'Apple Pay', 'Google Pay')),
+    TransactionID VARCHAR(100),
+    PaymentDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Status VARCHAR(20) CHECK (Status IN ('Pending', 'Completed', 'Failed', 'Refunded')),
+    RefundAmount DECIMAL(12,2) DEFAULT 0,
+    LastFourDigits VARCHAR(4),
+    CardType VARCHAR(20),
+    GatewayResponse TEXT,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+
+-- Create Returns table
+CREATE TABLE Returns (
+    ReturnID INT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    CustomerID INT NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    ReturnDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ReturnReason VARCHAR(200),
+    Condition VARCHAR(50) CHECK (Condition IN ('New', 'Used', 'Damaged', 'Defective')),
+    RefundAmount DECIMAL(12,2),
+    RefundMethod VARCHAR(50),
+    Status VARCHAR(30) CHECK (Status IN ('Requested', 'Approved', 'Processed', 'Rejected')),
+    ProcessedBy INT,
+    ResolutionNotes TEXT,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProcessedBy) REFERENCES Employees(EmployeeID)
+);
+
+-- Create Wishlist table for customer saved items
+CREATE TABLE Wishlist (
+    WishlistID INT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    ProductID INT NOT NULL,
+    AddedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    UNIQUE(CustomerID, ProductID)
+);
+
+-- Create ProductReviews table
+CREATE TABLE ProductReviews (
+    ReviewID INT PRIMARY KEY,
+    ProductID INT NOT NULL,
+    CustomerID INT NOT NULL,
+    Rating INT CHECK (Rating BETWEEN 1 AND 5),
+    ReviewText TEXT,
+    ReviewDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsVerifiedPurchase BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    UNIQUE(ProductID, CustomerID)
+);
+
+-- Create ShippingTracking table
+CREATE TABLE ShippingTracking (
+    TrackingID INT PRIMARY KEY,
+    OrderItemID INT NOT NULL,
+    Carrier VARCHAR(50),
+    TrackingNumber VARCHAR(100),
+    Status VARCHAR(50),
+    EstimatedDelivery DATE,
+    ActualDelivery DATE,
+    LastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (OrderItemID) REFERENCES OrderItems(OrderItemID)
+);
+
+-- Create AuditLog table for compliance
+CREATE TABLE AuditLog (
+    LogID INT PRIMARY KEY,
+    TableName VARCHAR(50) NOT NULL,
+    RecordID INT NOT NULL,
+    Action VARCHAR(20) CHECK (Action IN ('INSERT', 'UPDATE', 'DELETE', 'VIEW')),
+    ChangedBy VARCHAR(100),
+    ChangeDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    OldValues JSONB,
+    NewValues JSONB,
+    IPAddress VARCHAR(45)
+);
+
+-- =====================================================
+-- 4. CREATE INDEXES FOR PERFORMANCE
+-- =====================================================
+
+-- Customers indexes
+CREATE INDEX idx_customers_email ON Customers(Email);
+CREATE INDEX idx_customers_name ON Customers(LastName, FirstName);
+CREATE INDEX idx_customers_loyalty ON Customers(LoyaltyTier);
+
+-- Products indexes
+CREATE INDEX idx_products_category ON Products(CategoryID);
+CREATE INDEX idx_products_supplier ON Products(SupplierID);
+CREATE INDEX idx_products_sku ON Products(SKU);
+CREATE INDEX idx_products_name ON Products(ProductName);
+CREATE INDEX idx_products_price ON Products(UnitPrice);
+
+-- Inventory indexes
+CREATE INDEX idx_inventory_product ON Inventory(ProductID);
+CREATE INDEX idx_inventory_center ON Inventory(CenterID);
+CREATE INDEX idx_inventory_quantity ON Inventory(QuantityAvailable);
+
+-- Orders indexes
+CREATE INDEX idx_orders_customer ON Orders(CustomerID);
+CREATE INDEX idx_orders_date ON Orders(OrderDate);
+CREATE INDEX idx_orders_status ON Orders(Status);
+CREATE INDEX idx_orders_channel ON Orders(Channel);
+
+-- OrderItems indexes
+CREATE INDEX idx_orderitems_order ON OrderItems(OrderID);
+CREATE INDEX idx_orderitems_product ON OrderItems(ProductID);
+CREATE INDEX idx_orderitems_status ON OrderItems(Status);
+
+-- Payments indexes
+CREATE INDEX idx_payments_order ON Payments(OrderID);
+CREATE INDEX idx_payments_date ON Payments(PaymentDate);
+
+-- Returns indexes
+CREATE INDEX idx_returns_order ON Returns(OrderID);
+CREATE INDEX idx_returns_product ON Returns(ProductID);
+CREATE INDEX idx_returns_customer ON Returns(CustomerID);
+
+-- =====================================================
+-- 5. SAMPLE INSERT STATEMENTS (Optional)
+-- =====================================================
+
+-- Insert sample categories
+INSERT INTO Categories (CategoryID, CategoryName, ParentCategoryID, Description) VALUES
+(1, 'Apparel', NULL, 'All clothing items'),
+(2, 'Men''s Apparel', 1, 'Clothing for men'),
+(3, 'Women''s Apparel', 1, 'Clothing for women'),
+(4, 'T-Shirts', 2, 'Casual t-shirts for men'),
+(5, 'Jeans', 2, 'Denim jeans for men'),
+(6, 'Dresses', 3, 'Women''s dresses'),
+(7, 'Accessories', NULL, 'Fashion accessories');
+
+-- Insert sample suppliers
+INSERT INTO Suppliers (SupplierID, SupplierName, ContactName, ContactEmail, LeadTime, Rating) VALUES
+(101, 'Cotton Industries', 'James Wilson', 'james@cottonind.com', 14, 4.5),
+(102, 'Denim Co.', 'Sarah Chen', 'sarah@denimco.com', 10, 4.8),
+(103, 'Fashion Fabrics', 'Maria Garcia', 'maria@fashionfabrics.com', 21, 4.2);
+
+-- Insert sample fulfillment centers
+INSERT INTO FulfillmentCenters (CenterID, CenterName, CenterType, City, State) VALUES
+(1, 'West Coast Warehouse', 'Warehouse', 'Los Angeles', 'CA'),
+(2, 'East Coast Distribution', 'Distribution Center', 'Newark', 'NJ'),
+(3, 'Downtown Store', 'Store', 'Chicago', 'IL');
+
+-- Insert sample products
+INSERT INTO Products (ProductID, SKU, ProductName, CategoryID, SupplierID, Size, Color, UnitPrice, Cost) VALUES
+(1001, 'TS-MEN-BLK-L', 'Classic Black T-Shirt', 4, 101, 'L', 'Black', 24.99, 12.50),
+(1002, 'TS-MEN-BLK-M', 'Classic Black T-Shirt', 4, 101, 'M', 'Black', 24.99, 12.50),
+(1003, 'JN-MEN-BLU-32', 'Slim Fit Blue Jeans', 5, 102, '32', 'Blue', 79.99, 35.00),
+(1004, 'DR-WMN-RED-S', 'Summer Red Dress', 6, 103, 'S', 'Red', 89.99, 42.00);
+
+-- Insert sample customers
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, City, State, LoyaltyTier, RegistrationDate) VALUES
+(10001, 'John', 'Smith', 'john.smith@email.com', 'New York', 'NY', 'Gold', '2022-03-15'),
+(10002, 'Emma', 'Johnson', 'emma.j@email.com', 'Los Angeles', 'CA', 'Silver', '2023-01-20'),
+(10003, 'Michael', 'Brown', 'michael.b@email.com', 'Chicago', 'IL', 'Bronze', '2023-06-10');
+
+-- Insert sample inventory
+INSERT INTO Inventory (InventoryID, ProductID, CenterID, QuantityAvailable) VALUES
+(1, 1001, 1, 150),
+(2, 1001, 2, 100),
+(3, 1002, 1, 75),
+(4, 1003, 1, 50),
+(5, 1003, 3, 25),
+(6, 1004, 2, 30);
+
+-- Insert sample order
+INSERT INTO Orders (OrderID, CustomerID, TotalAmount, Status, PaymentStatus, Channel) VALUES
+(50001, 10001, 129.97, 'Delivered', 'Paid', 'Web');
+
+INSERT INTO OrderItems (OrderItemID, OrderID, ProductID, Quantity, UnitPrice) VALUES
+(100001, 50001, 1001, 2, 24.99),
+(100002, 50001, 1003, 1, 79.99);
+
+INSERT INTO Payments (PaymentID, OrderID, Amount, PaymentMethod, TransactionID, Status) VALUES
+(1000001, 50001, 129.97, 'Credit Card', 'TXN123456789', 'Completed');
+
+-- =====================================================
+-- 6. DESIGN ASSUMPTIONS / NOTES
+-- =====================================================
+/*
+    1. DATA VOLUME & SCALABILITY:
+       - All tables use INT as primary key type, assuming auto-increment or 
+         sequence-based generation in production. For future scale, consider 
+         BIGINT for Orders, OrderItems, and Inventory tables.
+       - Indexes are created on all foreign keys and frequently queried columns
+         to optimize query performance as data grows.
+
+    2. NORMALIZATION:
+       - Schema follows 3NF to minimize redundancy and maintain data integrity.
+       - Inventory serves as a junction table between Products and FulfillmentCenters,
+         enabling many-to-many relationship with quantity tracking.
+       - Wishlist and ProductReviews provide additional customer engagement features
+         without cluttering core tables.
+
+    3. OMNICHANNEL SUPPORT:
+       - Orders table includes Channel field to distinguish between web, app, 
+         in-store, and other purchase channels.
+       - FulfillmentCenters include both warehouses (for online orders) and stores
+         (for in-store purchases and click-and-collect).
+       - Inventory tracks stock across all fulfillment types, enabling true 
+         omnichannel inventory visibility.
+
+    4. REAL-TIME INVENTORY:
+       - Inventory table includes QuantityAvailable and ReservedQuantity fields
+         to support real-time inventory management.
+       - ReservedQuantity allows holding stock for in-progress orders before
+         final confirmation.
+       - LastUpdated timestamp enables tracking of inventory changes.
+
+    5. APPAREL-SPECIFIC ATTRIBUTES:
+       - Products table includes size, color, and material attributes specific
+         to apparel retail.
+       - Category hierarchy supports flexible product categorization.
+
+    6. AUDIT & COMPLIANCE:
+       - AuditLog table tracks all data changes for compliance and debugging.
+       - Timestamp fields throughout provide audit capabilities.
+       - Payment information is limited (LastFourDigits only) for PCI compliance.
+       - Customer marketing preferences stored for GDPR/CCPA compliance.
+
+    7. DATA INTEGRITY:
+       - Check constraints ensure data validity (positive quantities, valid status values)
+       - Foreign key constraints maintain referential integrity across tables
+       - UNIQUE constraints prevent duplicate records (e.g., duplicate enrollments,
+         duplicate wishlist items, multiple reviews from same customer)
+
+    8. FLEXIBILITY:
+       - JSONB fields (Preferences, OldValues/NewValues) allow storing flexible
+         data structures without schema changes.
+       - Generated columns (TotalPrice) reduce application-side calculations.
+
+    9. BUSINESS RULES:
+       - Customers can have multiple orders (1:N)
+       - Orders contain multiple items (1:N)
+       - Products can be in multiple orders (N:N via OrderItems)
+       - Products can be stocked at multiple fulfillment centers (N:N via Inventory)
+       - Returns track which products from which orders are being returned
+
+    10. FUTURE EXTENSIBILITY:
+        - Schema includes features like Wishlist and ProductReviews for future
+          customer engagement features.
+        - ShippingTracking table allows for detailed shipment monitoring.
+        - The design can easily accommodate new channels, payment methods,
+          or fulfillment types without major restructuring.
+*/
+-- =====================================================
+-- END OF SCHEMA
+-- =====================================================
+
+
+## Instructions to Create the .txt File
+
+1. Copy all the SQL code above
+2. Open a text editor (Notepad, VS Code, etc.)
+3. Paste the code
+4. Save the file as `SQL_Schema_Definition_Solution.txt`
+
+**Alternative**: You can also save it with a `.sql` extension as `SQL_Schema_Definition_Solution.sql` for direct execution in a PostgreSQL database.

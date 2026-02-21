@@ -1,7 +1,8 @@
 
 <p float="left">
-    <img src="../Screenshots/TrendyThreads.png" width="300" />
-    <img src="../Screenshots/FashionMart.png" width="300" />
+    <img src="../Screenshots/TrendyThreads.png" width="200" />
+    <img src="../Screenshots/FashionMart.png" width="200" />
+    <img src="../Screenshots/FutureMart.png" width="200" />
 </p>
 
 # Capstone Project Case Study: Merging Data Architectures of FashionMart and TrendyThreads
