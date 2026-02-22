@@ -1,0 +1,27 @@
+theia@theia-hirewillieco:/home/project$ # Time Exercise 2
+time ./exercise_2_data_analytics.sh
+
+# Time Exercise 3
+time ./exercise_3_optimize_data_analytics.sh
+Step 1: Extracting Product_Name and removing header...
+Step 2: Selecting only Apparel products...
+Step 3: Sorting data by Product_Name...
+Step 5: Counting the number of products...
+Product launch statistics
+     39 Jeans
+     38 T-Shirt
+     29 Jacket
+
+real    0m0.012s
+user    0m0.005s
+sys     0m0.013s
+Step 1-4: Extracting, filtering, sorting, and counting products in one pipeline...
+Product launch statistics
+     39 Jeans
+     38 T-Shirt
+     29 Jacket
+
+real    0m0.007s
+user    0m0.003s
+sys     0m0.014s
+theia@theia-hirewillieco:/home/project$ 

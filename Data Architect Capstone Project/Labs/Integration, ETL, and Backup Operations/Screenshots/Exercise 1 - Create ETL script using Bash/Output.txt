@@ -1,0 +1,55 @@
+theia@theia-hirewillieco:/home/project$ # Check files
+ls -la
+
+# Make script executable
+chmod +x exercise_1_etl.sh
+
+# Run the script
+./exercise_1_etl.sh
+
+# Verify output files
+ls -la
+
+# View the result
+cat combined_output.csv | head -10  # Shows first 10 lines
+total 56
+drwxrwsrwx 3 root  users 4096 Feb 21 18:20  .
+drwxrwxr-x 1 root  root  4096 Nov  3 17:07  ..
+drwxr-sr-x 2 theia users 4096 Feb 21 16:06  .theia
+-rw-r--r-- 1 theia users  725 Feb 21 16:48  exercise_1_etl.sh
+-rw-r--r-- 1 theia users  993 Feb 21 17:29  exercise_2_data_analytics.sh
+-rw-r--r-- 1 theia users  461 Feb 21 18:19  exercise_3_optimize_data_analytics.sh
+-rw-r--r-- 1 theia users 1186 Feb 21 18:27  exercise_4_mysql_backup.sh
+-rw-r--r-- 1 theia users 7043 Apr 15  2025  product-launch-data.csv
+-rw-r--r-- 1 theia users 1232 Dec 11 05:41  sales-file1.csv
+-rw-r--r-- 1 theia users 1361 Jun 12  2025  sales-file2.csv
+-rw-r--r-- 1 theia users  599 Dec 11 05:39 'tempate 2-bash script.sh'
+-rw-r--r-- 1 theia users  566 Feb 21 16:48 'template 1-bash script.sh'
+total 72
+drwxrwsrwx 3 root  users 4096 Feb 21 19:04  .
+drwxrwxr-x 1 root  root  4096 Nov  3 17:07  ..
+drwxr-sr-x 2 theia users 4096 Feb 21 16:06  .theia
+-rw-r--r-- 1 theia users 2217 Feb 21 19:04  combined_output.csv
+-rwxr-xr-x 1 theia users  725 Feb 21 16:48  exercise_1_etl.sh
+-rw-r--r-- 1 theia users  993 Feb 21 17:29  exercise_2_data_analytics.sh
+-rw-r--r-- 1 theia users  461 Feb 21 18:19  exercise_3_optimize_data_analytics.sh
+-rw-r--r-- 1 theia users 1186 Feb 21 18:27  exercise_4_mysql_backup.sh
+-rw-r--r-- 1 theia users 7043 Apr 15  2025  product-launch-data.csv
+-rw-r--r-- 1 theia users 1232 Dec 11 05:41  sales-file1.csv
+-rw-r--r-- 1 theia users 1361 Jun 12  2025  sales-file2.csv
+-rw-r--r-- 1 theia users 1093 Feb 21 19:04  sales_extracted2.csv
+-rw-r--r-- 1 theia users 1185 Feb 21 19:04  sales_uniq1.csv
+-rw-r--r-- 1 theia users 1030 Feb 21 19:04  sales_uniq2.csv
+-rw-r--r-- 1 theia users  599 Dec 11 05:39 'tempate 2-bash script.sh'
+-rw-r--r-- 1 theia users  566 Feb 21 16:48 'template 1-bash script.sh'
+,Baseball Cap,Accessories
+,Belt,Accessories2021
+,Blazer,Apparel2-2020
+,Bomber Jacket,Outerwear
+,Boots,Shoes8-11-2019
+,Breezy Pants,Apparel
+,Canvas Shoes,Shoes20
+,Cardigan,Apparel2018
+,Cargo Pants,Apparel2
+,Cargo Shorts,Apparel
+theia@theia-hirewillieco:/home/project$ 

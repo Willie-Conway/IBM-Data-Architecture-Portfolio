@@ -1,0 +1,112 @@
+SQL Schema Definition for Website Activity Monitoring Tool - Data Warehouse Version
+
+1. Objective  
+Create a data warehouse schema for FutureMart's website activity monitoring system that aggregates daily user activity data for analytics purposes using the Star Schema.
+
+2. Tables Overview (Star Schema)
+- DimDate: Date dimension for time-based analysis
+- DimUser: Stores user information (registered and guest users)
+- DimActionType: Action type categorization
+- DimPage: Page information
+- DimSession: Session attributes
+- FactDailyActivity: Stores daily aggregated metrics for user sessions and actions
+
+3. SQL: CREATE TABLE Statements
+
+-- Dimension Tables
+
+CREATE TABLE DimDate (
+    DateKey INT PRIMARY KEY,
+    FullDate DATE NOT NULL,
+    Day INT NOT NULL,
+    Month INT NOT NULL,
+    Quarter INT NOT NULL,
+    Year INT NOT NULL,
+    DayOfWeek INT NOT NULL,
+    DayName VARCHAR(20) NOT NULL,
+    MonthName VARCHAR(20) NOT NULL,
+    IsWeekend BOOLEAN NOT NULL
+);
+
+CREATE TABLE DimUser (
+    UserKey INT PRIMARY KEY,
+    UserID INT,
+    Email VARCHAR(100),
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    RegistrationDate DATE,
+    UserType ENUM('Registered', 'Guest') NOT NULL,
+    IsActive BOOLEAN DEFAULT TRUE,
+    EffectiveStartDate DATE NOT NULL,
+    EffectiveEndDate DATE,
+    IsCurrent BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE DimActionType (
+    ActionTypeKey INT PRIMARY KEY,
+    ActionTypeCode VARCHAR(50) NOT NULL,
+    ActionTypeName VARCHAR(100) NOT NULL,
+    ActionCategory VARCHAR(50) NOT NULL, -- 'Cart', 'Purchase', 'Navigation', 'Account'
+    IsConversion BOOLEAN DEFAULT FALSE -- Whether this action leads to conversion
+);
+
+CREATE TABLE DimPage (
+    PageKey INT PRIMARY KEY,
+    PageURL VARCHAR(500) NOT NULL,
+    PageName VARCHAR(200),
+    PageCategory VARCHAR(100), -- 'Home', 'Product', 'Checkout', etc.
+    ProductCategory VARCHAR(100)
+);
+
+CREATE TABLE DimSession (
+    SessionKey INT PRIMARY KEY,
+    SessionID INT NOT NULL,
+    DeviceType VARCHAR(50), -- Extracted from UserAgent
+    Browser VARCHAR(50),
+    OperatingSystem VARCHAR(50),
+    IsMobile BOOLEAN,
+    Country VARCHAR(100), -- From IPAddress
+    City VARCHAR(100)
+);
+
+-- Fact Table
+
+CREATE TABLE FactDailyActivity (
+    ActivityKey INT PRIMARY KEY,
+    DateKey INT NOT NULL,
+    UserKey INT NOT NULL,
+    SessionKey INT NOT NULL,
+    ActionTypeKey INT NOT NULL,
+    PageKey INT NOT NULL,
+    
+    -- Metrics / Measures
+    SessionCount INT DEFAULT 0,
+    PageViewCount INT DEFAULT 0,
+    ActionCount INT DEFAULT 0,
+    TotalDurationSeconds INT DEFAULT 0,
+    AvgDurationSeconds DECIMAL(10,2),
+    BounceCount INT DEFAULT 0, -- Sessions with only one page view
+    
+    -- Foreign Keys
+    FOREIGN KEY (DateKey) REFERENCES DimDate(DateKey),
+    FOREIGN KEY (UserKey) REFERENCES DimUser(UserKey),
+    FOREIGN KEY (SessionKey) REFERENCES DimSession(SessionKey),
+    FOREIGN KEY (ActionTypeKey) REFERENCES DimActionType(ActionTypeKey),
+    FOREIGN KEY (PageKey) REFERENCES DimPage(PageKey)
+);
+
+4. Design Assumptions / Notes
+- The schema follows the Star Schema design pattern with one fact table and multiple dimension tables.
+- Optimized for daily analytical reporting with pre-aggregated metrics.
+- DimUser implements a Type 2 Slowly Changing Dimension (SCD) to track user attribute changes over time.
+- UserKey may be NULL for guest users; UserType distinguishes between registered and guest users.
+- DimDate enables time-based analysis across multiple hierarchies (day, month, quarter, year).
+- FactDailyActivity stores aggregated data at daily grain level for better query performance.
+- Dimension tables contain descriptive attributes for slicing and filtering data.
+- The schema supports analysis of user behavior patterns, conversion funnels, peak usage times, and popular pages.
+- Pre-calculated metrics (AvgDurationSeconds, BounceCount) improve query performance.
+- IPAddress from source is parsed into Country and City in DimSession.
+- UserAgent from source is parsed into DeviceType, Browser, and OperatingSystem in DimSession.
+- This star schema significantly improves query performance compared to the normalized OLTP schema.
+- Use INT for primary keys; assume auto-increment.
+- All dimension tables have surrogate keys (DateKey, UserKey, etc.) for better performance and SCD handling.

@@ -1,0 +1,74 @@
+theia@theiadocker-hirewillieco:/home/project$ # Check files
+ls -la
+
+# Make script executable
+chmod +x exercise_3_optimize_data_analytics.sh
+
+# Run the script
+./exercise_3_optimize_data_analytics.sh
+
+# Verify only final_data.csv was created
+ls -la *.csv
+
+# View the results
+echo "=== Product Launch Statistics ==="
+cat final_data.csv
+
+# Show total number of products counted
+echo "=== Total Unique Products ==="
+wc -l final_data.csv
+total 80
+drwxrwsrwx 3 root  users 4096 Feb 21 19:23 .
+drwxrwxr-x 1 root  root  4096 Nov  3 17:07 ..
+drwxr-sr-x 2 theia users 4096 Feb 21 14:37 .theia
+-rw-r--r-- 1 theia users 2117 Feb 21 19:23 combined_output.csv
+-rwxr-xr-x 1 theia users  725 Feb 21 18:41 exercise_1_etl.sh
+-rwxr-xr-x 1 theia users  993 Feb 21 18:41 exercise_2_data_analytics.sh
+-rwxr-xr-x 1 theia users  461 Feb 21 18:42 exercise_3_optimize_data_analytics.sh
+-rw-r--r-- 1 theia users 1192 Feb 21 18:47 exercise_4_mysql_backup.sh
+-rw-r--r-- 1 theia users 2782 Feb 21 19:23 extracted_data.csv
+-rw-r--r-- 1 theia users 1589 Feb 21 19:23 filtered_data.csv
+-rw-r--r-- 1 theia users   45 Feb 21 19:23 final_data.csv
+-rw-r--r-- 1 theia users 6859 Feb 21 18:43 product-launch-data.csv
+-rw-r--r-- 1 theia users 1179 Feb 21 19:21 sales-file1.csv
+-rw-r--r-- 1 theia users 1308 Feb 21 19:20 sales-file2.csv
+theia@theiadocker-hirewillieco:/home/project$ # Check if MySQL is running
+sudo service mysql status
+
+# If MySQL is not running, start it
+sudo service mysql start
+theia@theiadocker-hirewillieco:/home/project$ # Step 1: Create backup directory
+mkdir -p /home/project/backups
+
+# Step 2: Make script executable
+chmod +x exercise_4_mysql_backup.sh
+
+# Step 3: Run the backup
+./exercise_4_mysql_backup.sh
+
+# Step 4: Verify backup
+echo "=== Backup Files ==="
+ls -la /home/project/backups/
+
+echo "=== Most Recent Backup ==="
+ls -lt /home/project/backups/ | head -3
+
+echo "=== Backup File Size ==="
+du -h /home/project/backups/webproducts_backup_*.sql
+Starting MySQL database backup...
+Database: web_products
+Backup location: /home/project/backups/webproducts_backup_2026-02-21.sql
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+mysqldump: Got error: 1049: Unknown database 'web_products' when selecting the database
+Error: Backup failed!
+=== Backup Files ===
+total 12
+drwxr-sr-x 2 theia users 4096 Feb 21 19:35 .
+drwxrwsrwx 4 root  users 4096 Feb 21 19:35 ..
+-rw-r--r-- 1 theia users  788 Feb 21 19:35 webproducts_backup_2026-02-21.sql
+=== Most Recent Backup ===
+total 4
+-rw-r--r-- 1 theia users 788 Feb 21 19:35 webproducts_backup_2026-02-21.sql
+=== Backup File Size ===
+4.0K    /home/project/backups/webproducts_backup_2026-02-21.sql
+theia@theiadocker-hirewillieco:/home/project$ 
