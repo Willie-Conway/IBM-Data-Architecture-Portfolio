@@ -1,4 +1,35 @@
-Here are practical code examples for each cloud connector tool, demonstrating real ETL scenarios.
+# Connectors Supplement
+
+![AWS Glue](<AWS Glue.png>)
+
+
+## AWS Glue Connector for MongoDB
+
+The AWS Glue Connector for MongoDB allows you to extract data from MongoDB databases and load it into AWS Glue Data Catalog. This connector supports both MongoDB Atlas and self-managed MongoDB instances.
+
+### Prerequisites
+
+- AWS Glue version 3.0 or later
+- MongoDB database with read access
+- AWS IAM role with permissions to access MongoDB and AWS Glue
+
+### Configuration
+
+1. **Create a MongoDB Connection in AWS Glue**:
+   - Navigate to the AWS Glue console.
+   - Go to the "Connections" section and click "Add connection".
+   - Select "MongoDB" as the connection type.
+   - Provide the connection details:
+     - Connection name
+     - MongoDB URI (e.g., `mongodb://username:password@host:port/database`)
+     - Authentication method (if required)
+   - Save the connection.
+
+2. **Create a Crawler**:
+   - Go to the "Crawlers" section and click "Add crawler".
+   - Provide a name for the crawler.
+   - Select the IAM role with the necessary permissions.
+   - Choose the data store as "
 
 ## AWS Glue Code Example
 
@@ -63,6 +94,27 @@ job.commit()
 - **S3 integration**: Direct read/write to S3 buckets
 - **Schema inference**: Automatic header detection from CSV
 - **Partitioning**: Data written with partitioning by category level
+
+![Google Cloud Dataflow](<Google Dataflow.png>)
+
+## Google Cloud Dataflow Connector for MongoDB
+
+The Google Cloud Dataflow connector for MongoDB allows you to read and write data between MongoDB and Google Cloud Dataflow pipelines. This connector is useful for scenarios where you need to integrate MongoDB data with other Google Cloud services or perform complex transformations on MongoDB data using Dataflow's distributed processing capabilities.
+
+### Key Features: 
+
+- **Read from MongoDB**: Extract data from MongoDB collections
+- **Write to MongoDB**: Load transformed data back to MongoDB
+- **Schema inference**: Automatic detection of MongoDB document structure
+- **Batch and streaming**: Support for both batch and streaming pipelines
+- **Fault tolerance**: Built-in recovery mechanisms for pipeline failures
+- **Scalability**: Automatic scaling of Dataflow workers based on data volume
+  
+### Use Cases:
+- Real-time data processing from MongoDB
+- Data migration between MongoDB and other Google Cloud services
+- Complex ETL jobs requiring Dataflow's distributed processing capabilities
+  
 
 ## Google Cloud Dataflow Code Example
 
@@ -160,6 +212,15 @@ if __name__ == '__main__':
 - **Windowing**: Fixed-time windows for aggregating streaming data
 - **Pub/Sub integration**: Native connector for Google's messaging service
 - **Auto-scaling**: Pipeline automatically scales based on data volume
+
+
+![IBM InfoSphere DataStage](<IBM InfoSphere DataStage.png>)
+
+# IBM InfoSphere DataStage
+IBM InfoSphere DataStage is a data integration tool that enables organizations to move, transform, and manage data across various systems. It provides a visual environment for designing data pipelines, ensuring efficient and reliable data processing.
+
+The IBM InfoSphere DataStage is a powerful data integration tool that provides a visual environment for designing and executing data pipelines. It supports various connectors and transformations, making it suitable for complex data integration tasks.
+
 
 ## IBM InfoSphere DataStage Example
 
