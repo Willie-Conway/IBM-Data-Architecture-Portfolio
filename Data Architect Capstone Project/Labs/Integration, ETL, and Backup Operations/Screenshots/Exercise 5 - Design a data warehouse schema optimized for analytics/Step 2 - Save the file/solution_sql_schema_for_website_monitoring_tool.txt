@@ -1,0 +1,123 @@
+1. Objective  
+Create a data warehouse schema for FutureMart's website activity monitoring system that aggregates daily user activity data for analytics purposes using the Star Schema.
+
+2. Tables Overview (Star Schema)
+
+**Fact Table:**
+- FactDailyActivity: Stores daily aggregated metrics for user sessions and actions
+
+**Dimension Tables:**
+- DimUser: User information (slowly changing dimension)
+- DimDate: Date dimension for time-based analysis
+- DimActionType: Action type categorization
+- DimPage: Page information
+- DimSession: Session attributes
+
+3. SQL: CREATE TABLE Statements
+
+-- Dimension Tables
+
+CREATE TABLE DimDate (
+    DateKey INT PRIMARY KEY,
+    FullDate DATE,
+    Day INT,
+    Month INT,
+    Quarter INT,
+    Year INT,
+    DayOfWeek INT,
+    DayName VARCHAR(20),
+    MonthName VARCHAR(20),
+    IsWeekend BOOLEAN
+);
+
+CREATE TABLE DimUser (
+    UserKey INT PRIMARY KEY,
+    UserID INT,
+    Email VARCHAR(100),
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    RegistrationDate DATE,
+    UserType ENUM('Registered', 'Guest'),
+    IsActive BOOLEAN,
+    EffectiveStartDate DATE,
+    EffectiveEndDate DATE,
+    IsCurrent BOOLEAN
+);
+
+CREATE TABLE DimActionType (
+    ActionTypeKey INT PRIMARY KEY,
+    ActionTypeCode VARCHAR(50),
+    ActionTypeName VARCHAR(100),
+    ActionCategory VARCHAR(50), -- 'Cart', 'Purchase', 'Navigation', 'Account'
+    IsConversion BOOLEAN -- Whether this action leads to conversion
+);
+
+CREATE TABLE DimPage (
+    PageKey INT PRIMARY KEY,
+    PageURL VARCHAR(500),
+    PageName VARCHAR(200),
+    PageCategory VARCHAR(100), -- 'Home', 'Product', 'Checkout', etc.
+    ProductCategory VARCHAR(100)
+);
+
+CREATE TABLE DimSession (
+    SessionKey INT PRIMARY KEY,
+    SessionID INT,
+    DeviceType VARCHAR(50), -- Extracted from UserAgent
+    Browser VARCHAR(50),
+    OperatingSystem VARCHAR(50),
+    IsMobile BOOLEAN,
+    Country VARCHAR(100), -- From IPAddress
+    City VARCHAR(100)
+);
+
+-- Fact Table
+
+CREATE TABLE FactDailyActivity (
+    ActivityKey INT PRIMARY KEY,
+    DateKey INT,
+    UserKey INT,
+    SessionKey INT,
+    ActionTypeKey INT,
+    PageKey INT,
+    
+    -- Metrics / Measures
+    SessionCount INT DEFAULT 0,
+    PageViewCount INT DEFAULT 0,
+    ActionCount INT DEFAULT 0,
+    TotalDurationSeconds INT DEFAULT 0,
+    AvgDurationSeconds DECIMAL(10,2),
+    BounceCount INT DEFAULT 0, -- Sessions with only one page view
+    
+    -- Foreign Keys
+    FOREIGN KEY (DateKey) REFERENCES DimDate(DateKey),
+    FOREIGN KEY (UserKey) REFERENCES DimUser(UserKey),
+    FOREIGN KEY (SessionKey) REFERENCES DimSession(SessionKey),
+    FOREIGN KEY (ActionTypeKey) REFERENCES DimActionType(ActionTypeKey),
+    FOREIGN KEY (PageKey) REFERENCES DimPage(PageKey)
+);
+
+4. Design Assumptions / Notes
+
+- The schema follows the Star Schema design pattern with one fact table and multiple dimension tables
+- Optimized for daily analytical reporting with pre-aggregated metrics
+- DimUser implements a Type 2 Slowly Changing Dimension (SCD) to track user attribute changes over time
+- DimDate enables time-based analysis across multiple hierarchies (day, month, quarter, year)
+- FactDailyActivity stores aggregated data at daily grain level for better query performance
+- Dimension tables contain descriptive attributes for slicing and filtering data
+- The schema supports analysis of:
+  * User behavior patterns
+  * Conversion funnels
+  * Peak usage times
+  * Popular pages and actions
+  * Device and browser preferences
+  * Geographic distribution
+- Pre-calculated metrics (AvgDurationSeconds, BounceCount) improve query performance
+- The design is extensible - new dimensions or measures can be added without restructuring
+- This star schema significantly improves query performance compared to the normalized OLTP schema
+- Supports common analytics queries like:
+  * "Daily active users by device type"
+  * "Conversion rate by user type"
+  * "Peak usage hours by day of week"
+  * "Most viewed product pages"
+  * "User engagement metrics over time"
