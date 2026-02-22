@@ -7,7 +7,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![ETL](https://img.shields.io/badge/ETL-FF6C37?style=for-the-badge&logo=apache&logoColor=white)
-![Data Governance](https://img.shields.io/badge/Data_Governance-00C7B7?style-for-the-badge&logo=databricks&logoColor=white)
+![Data Governance](https://img.shields.io/badge/Data_Governance-00C7B7?style=for-the-badge&logo=databricks&logoColor=white)
 
 ## 🏛️ Overview
 
@@ -178,7 +178,7 @@ Welcome to my comprehensive **IBM Data Architecture Portfolio**! This repository
 
 ### **Data Modeling & Design**
 ![ERD](https://img.shields.io/badge/ERD-6C78AF?style=for-the-badge&logo=diagramsdotnet&logoColor=white)
-![Star Schema](https://img.shields.io/badge/Star_Schema-FF6F61?style-for-the-badge&logo=databricks&logoColor=white)
+![Star Schema](https://img.shields.io/badge/Star_Schema-FF6F61?style=for-the-badge&logo=databricks&logoColor=white)
 ![Normalization](https://img.shields.io/badge/Normalization-4479A1?style=for-the-badge&logo=databricks&logoColor=white)
 ![OLTP/OLAP](https://img.shields.io/badge/OLTP_OLAP-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
