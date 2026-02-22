@@ -1,3 +1,7 @@
+
+![Equifax](Equifax.png)
+
+
 # Case Study: The Consequences of Insecure Data
 
 ## Objectives
