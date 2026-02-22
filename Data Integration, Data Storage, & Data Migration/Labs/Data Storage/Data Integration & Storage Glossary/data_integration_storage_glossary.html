@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Integration & Storage — Reference Glossary</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0e1117;
+  --surface:   #151b25;
+  --panel:     #1a2232;
+  --border:    #243044;
+  --border2:   #2e3d56;
+  --amber:     #f5a623;
+  --amber-dim: #c47d0e;
+  --teal:      #2dd4bf;
+  --teal-dim:  #0f766e;
+  --blue:      #3b82f6;
+  --purple:    #a78bfa;
+  --green:     #4ade80;
+  --red:       #f87171;
+  --text:      #e2e8f0;
+  --text-dim:  #64748b;
+  --text-mid:  #94a3b8;
+  --connector: #f5a623;
+  --storage:   #2dd4bf;
+  --protocol:  #a78bfa;
+  --process:   #4ade80;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── ANIMATED PIPELINE BACKGROUND ── */
+.pipeline-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pipe-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(45,212,191,0.06), transparent);
+  height: 1px;
+  width: 200%;
+  animation: flowRight 8s linear infinite;
+}
+
+.pipe-line:nth-child(1)  { top: 15%; animation-duration: 9s; animation-delay: 0s; }
+.pipe-line:nth-child(2)  { top: 32%; animation-duration: 13s; animation-delay: -4s; background: linear-gradient(90deg, transparent, rgba(245,166,35,0.05), transparent); }
+.pipe-line:nth-child(3)  { top: 51%; animation-duration: 7s; animation-delay: -2s; }
+.pipe-line:nth-child(4)  { top: 68%; animation-duration: 11s; animation-delay: -6s; background: linear-gradient(90deg, transparent, rgba(167,139,250,0.05), transparent); }
+.pipe-line:nth-child(5)  { top: 84%; animation-duration: 15s; animation-delay: -1s; }
+
+@keyframes flowRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* Dot grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(45,212,191,0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── LAYOUT ── */
+.app {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(14,17,23,0.92);
+  backdrop-filter: blur(12px);
+  padding: 0 40px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--teal);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.brand-title {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.brand-title em {
+  font-style: normal;
+  color: var(--amber);
+}
+
+.header-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.hstat {
+  text-align: right;
+}
+
+.hstat-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--teal);
+  line-height: 1;
+}
+
+.hstat-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 3px;
+}
+
+/* Pipeline category legend */
+.pipeline-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+  overflow-x: auto;
+}
+
+.legend-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.legend-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: relative;
+}
+
+.legend-node::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-node.connector-node { color: var(--connector); border-color: rgba(245,166,35,0.2); background: rgba(245,166,35,0.06); }
+.legend-node.connector-node::before { background: var(--connector); }
+.legend-node.storage-node   { color: var(--storage);   border-color: rgba(45,212,191,0.2);  background: rgba(45,212,191,0.06); }
+.legend-node.storage-node::before   { background: var(--storage); }
+.legend-node.protocol-node  { color: var(--protocol);  border-color: rgba(167,139,250,0.2); background: rgba(167,139,250,0.06); }
+.legend-node.protocol-node::before  { background: var(--protocol); }
+.legend-node.process-node   { color: var(--process);   border-color: rgba(74,222,128,0.2);  background: rgba(74,222,128,0.06); }
+.legend-node.process-node::before   { background: var(--process); }
+
+.legend-node:hover, .legend-node.active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.legend-node.connector-node.active { background: rgba(245,166,35,0.15); border-color: var(--connector); }
+.legend-node.storage-node.active   { background: rgba(45,212,191,0.15); border-color: var(--storage); }
+.legend-node.protocol-node.active  { background: rgba(167,139,250,0.15); border-color: var(--protocol); }
+.legend-node.process-node.active   { background: rgba(74,222,128,0.15); border-color: var(--process); }
+
+.legend-sep { color: var(--border2); margin: 0 4px; font-size: 18px; flex-shrink: 0; }
+
+.legend-all {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 5px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  white-space: nowrap;
+}
+.legend-all:hover, .legend-all.active { border-color: var(--teal); color: var(--teal); background: rgba(45,212,191,0.08); }
+
+/* ── CONTROLS ── */
+.controls {
+  background: rgba(14,17,23,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-wrap {
+  flex: 1;
+  position: relative;
+  max-width: 520px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 16px 10px 42px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+#searchInput:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(45,212,191,0.1);
+}
+
+#searchInput::placeholder { color: var(--text-dim); }
+
+.ctrl-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.result-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.result-badge strong { color: var(--amber); }
+
+.view-toggle {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.vbtn {
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.vbtn.active { background: var(--teal); color: var(--bg); }
+
+.expand-btn-ctrl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 8px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.expand-btn-ctrl:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── MAIN CONTENT ── */
+main {
+  padding: 32px 40px 60px;
+}
+
+/* ── ALPHA GROUP ── */
+.alpha-group { margin-bottom: 40px; }
+
+.alpha-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.alpha-letter {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: rgba(45,212,191,0.12);
+  line-height: 1;
+  min-width: 44px;
+}
+
+.alpha-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border2), transparent);
+}
+
+.alpha-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── GRID / LIST ── */
+.terms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+.terms-list { display: flex; flex-direction: column; gap: 8px; }
+
+/* ── TERM CARD ── */
+.term-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  animation: cardIn 0.25s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.term-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+
+.term-card.open {
+  border-color: var(--teal-dim);
+  box-shadow: 0 0 0 1px var(--teal-dim), 0 8px 32px rgba(45,212,191,0.1);
+}
+
+/* colored top accent by category */
+.term-card[data-cat="connector"] .card-accent { background: var(--connector); }
+.term-card[data-cat="storage"]   .card-accent { background: var(--storage); }
+.term-card[data-cat="protocol"]  .card-accent { background: var(--protocol); }
+.term-card[data-cat="process"]   .card-accent { background: var(--process); }
+
+.card-accent {
+  height: 3px;
+  width: 100%;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.term-card.open .card-accent { opacity: 1; }
+
+.card-head {
+  padding: 14px 16px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-head-left { flex: 1; min-width: 0; }
+
+.term-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.term-title .hl { background: rgba(245,166,35,0.25); color: var(--amber); border-radius: 2px; padding: 0 2px; }
+
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.cat-chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+
+.chip-connector { color: var(--connector); background: rgba(245,166,35,0.1);  }
+.chip-connector::before { background: var(--connector); }
+.chip-storage   { color: var(--storage);   background: rgba(45,212,191,0.1);  }
+.chip-storage::before   { background: var(--storage); }
+.chip-protocol  { color: var(--protocol);  background: rgba(167,139,250,0.1); }
+.chip-protocol::before  { background: var(--protocol); }
+.chip-process   { color: var(--process);   background: rgba(74,222,128,0.1);  }
+.chip-process::before   { background: var(--process); }
+
+.toggle-icon {
+  font-size: 16px;
+  color: var(--text-dim);
+  transition: transform 0.2s, color 0.2s;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.term-card.open .toggle-icon { transform: rotate(45deg); color: var(--teal); }
+
+/* Preview */
+.card-preview {
+  padding: 0 16px 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.term-card.open .card-preview { display: none; }
+
+/* Expanded body */
+.card-body {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.term-card.open .card-body { display: block; }
+
+.def-block {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 6px;
+  border-left: 3px solid var(--teal-dim);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.def-block .hl { background: rgba(245,166,35,0.2); color: var(--amber); border-radius: 2px; padding: 0 2px; }
+
+.example-block {
+  margin-top: 10px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.example-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--amber);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.example-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  opacity: 0.7;
+}
+
+.example-text {
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+.example-text .hl { background: rgba(245,166,35,0.2); color: var(--amber); border-radius: 2px; padding: 0 2px; }
+
+.copy-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.copy-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 5px 12px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.copy-btn:hover { border-color: var(--teal); color: var(--teal); }
+.copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+/* ── LIST MODE OVERRIDES ── */
+.terms-list .term-card:hover { transform: translateX(4px) translateY(0); }
+
+.terms-list .card-head { padding: 12px 16px; }
+.terms-list .card-preview { padding: 0 16px 12px; -webkit-line-clamp: 1; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-cats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.fcat {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fcat-dot { width: 7px; height: 7px; border-radius: 2px; }
+.fcat strong { color: var(--text); }
+
+.footer-copy {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.footer-copy span { color: var(--teal); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header { padding: 0 20px; }
+  .header-stats { display: none; }
+  .controls { padding: 12px 20px; flex-wrap: wrap; }
+  .search-wrap { max-width: 100%; }
+  main { padding: 20px; }
+  .terms-grid { grid-template-columns: 1fr; }
+  footer { padding: 14px 20px; }
+  .expand-btn-ctrl { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="pipeline-bg">
+  <div class="pipe-line"></div>
+  <div class="pipe-line"></div>
+  <div class="pipe-line"></div>
+  <div class="pipe-line"></div>
+  <div class="pipe-line"></div>
+</div>
+
+<div class="app">
+  <header>
+    <div class="header-top">
+      <div class="brand">
+        <div class="brand-tag">// reference_db · v3.1.0</div>
+        <div class="brand-title">DATA <em>INTEGRATION</em> &amp; STORAGE</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:6px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;">GLOSSARY &amp; FIELD REFERENCE</div>
+      </div>
+      <div class="header-stats">
+        <div class="hstat">
+          <div class="hstat-val" id="h-total">0</div>
+          <div class="hstat-label">Total Terms</div>
+        </div>
+        <div class="hstat" style="--teal:#f5a623">
+          <div class="hstat-val" style="color:var(--amber)" id="h-cats">4</div>
+          <div class="hstat-label">Categories</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val" style="color:var(--purple)" id="h-open">0</div>
+          <div class="hstat-label">Expanded</div>
+        </div>
+      </div>
+    </div>
+    <div class="pipeline-legend">
+      <span class="legend-label">FILTER ›</span>
+      <button class="legend-all active" data-filter="all">ALL</button>
+      <span class="legend-sep">·</span>
+      <button class="legend-node connector-node" data-filter="connector">Connectors</button>
+      <button class="legend-node storage-node"   data-filter="storage">Storage</button>
+      <button class="legend-node protocol-node"  data-filter="protocol">Protocols</button>
+      <button class="legend-node process-node"   data-filter="process">Processes</button>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search terms, definitions, examples…" autocomplete="off">
+    </div>
+    <div class="ctrl-right">
+      <div class="result-badge">Showing <strong id="vis-count">0</strong> / <strong id="tot-count">0</strong></div>
+      <div class="view-toggle">
+        <button class="vbtn active" id="btn-grid" title="Grid">⊞</button>
+        <button class="vbtn" id="btn-list" title="List">☰</button>
+      </div>
+      <button class="expand-btn-ctrl" id="expandAll">Expand All</button>
+    </div>
+  </div>
+
+  <main id="main"></main>
+
+  <footer>
+    <div class="footer-cats">
+      <div class="fcat"><div class="fcat-dot" style="background:var(--connector)"></div>Connectors <strong id="fc">0</strong></div>
+      <div class="fcat"><div class="fcat-dot" style="background:var(--storage)"></div>Storage <strong id="fs">0</strong></div>
+      <div class="fcat"><div class="fcat-dot" style="background:var(--protocol)"></div>Protocols <strong id="fp">0</strong></div>
+      <div class="fcat"><div class="fcat-dot" style="background:var(--process)"></div>Processes <strong id="fpr">0</strong></div>
+    </div>
+    <div class="footer-copy">DATA INTEGRATION &amp; STORAGE REF — <span>WILLIE CONWAY</span></div>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  { term:"API Connectors", cat:"connector", def:"Connectors that utilize APIs to integrate applications and services.", ex:"A weather application using OpenWeatherMap API to fetch real-time weather data, or a payment gateway like Stripe integrating with an e-commerce site to process transactions." },
+  { term:"Application Connectors", cat:"connector", def:"Connectors that integrate data from enterprise applications such as ERP and CRM systems.", ex:"Salesforce connector pulling customer data into HubSpot, or SAP connector syncing inventory data with an e-commerce platform." },
+  { term:"Apple Filing Protocol (AFP)", cat:"protocol", def:"File storage protocol that allows macOS users to share files and access file servers over a network.", ex:"Mac computer connecting to a Time Capsule for backups, or macOS clients accessing files on a macOS Server in a design agency." },
+  { term:"Block Storage", cat:"storage", def:"Stores data in fixed-size chunks that can be managed independently.", ex:"Amazon EBS volumes attached to EC2 instances for database storage, or SAN storage for virtual machine file systems." },
+  { term:"Change Data Capture (CDC)", cat:"process", def:"Tracks and captures changes in source data when updated, then transfers those updates to the target system in real-time.", ex:"Debezium capturing MySQL changes and streaming to Kafka for real-time analytics, or Oracle GoldenGate replicating changes to a data warehouse." },
+  { term:"Cloud Connectors", cat:"connector", def:"Connectors that enable data transfer between cloud-based applications and services.", ex:"AWS S3 connector transferring files to Google Cloud Storage, or syncing data between Salesforce and AWS Redshift." },
+  { term:"Cloud Storage", cat:"storage", def:"Storage on remote servers accessed via the Internet.", ex:"Google Drive for personal file storage, Amazon S3 for hosting website assets, or Dropbox for business collaboration." },
+  { term:"Custom Connectors", cat:"connector", def:"Connectors developed to address specific integration needs not met by standard connectors; often used to link proprietary systems.", ex:"A custom-built connector for a legacy mainframe to modern cloud apps, or a connector for proprietary IoT devices sending data to Azure IoT Hub." },
+  { term:"Data Connectors", cat:"connector", def:"Software tools that facilitate data transfer between systems.", ex:"Fivetran or Stitch pulling data from databases, APIs, and files into a data warehouse like Snowflake." },
+  { term:"Data Extraction", cat:"process", def:"The process of retrieving data from the original source system.", ex:"Python script extracting sales data from SQL Server using pandas, or a web scraper extracting product prices from e-commerce sites." },
+  { term:"Data Integration", cat:"process", def:"Consolidating data from different sources to provide a single, coherent view.", ex:"Combining CRM, support tickets, and website analytics into a unified customer 360 view in a data warehouse." },
+  { term:"Data Loading", cat:"process", def:"The process of inserting transformed data into the destination system.", ex:"Bulk loading millions of records into Snowflake with the COPY command, or streaming data into Elasticsearch for real-time search." },
+  { term:"Data Mapping", cat:"process", def:"Aligning data fields between source and destination systems for accurate data transfer.", ex:"Mapping 'cust_id' in source to 'customerIdentifier' in a target API, or converting date formats from MM/DD/YYYY to YYYY-MM-DD." },
+  { term:"Data Replication", cat:"process", def:"Making a copy of data from one system to another to ensure availability.", ex:"MySQL master-slave replication for high availability, or AWS DMS replicating an Oracle database to Amazon RDS for disaster recovery." },
+  { term:"Data Synchronization", cat:"process", def:"Ensuring data remains consistent and up-to-date across connected systems, either in real-time or on a schedule.", ex:"Mobile app syncing a local SQLite database with a cloud backend when connectivity is restored." },
+  { term:"Data Transformation", cat:"process", def:"Converting extracted data into a format compatible with the target system.", ex:"dbt transforming raw JSON logs into structured tables, or Apache Spark converting CSV files to Parquet for efficient querying." },
+  { term:"Data Virtualization", cat:"process", def:"Creating a virtual data layer that leaves data in its source while providing a unified interface to consume it without copying.", ex:"Denodo creating virtual views across multiple databases, or Trino querying data across S3, MySQL, and Kafka without moving it." },
+  { term:"Database Connectors", cat:"connector", def:"Connectors that manage data flow between different database systems such as SQL and NoSQL.", ex:"JDBC driver connecting Java apps to MySQL, or MongoDB connector syncing data with Elasticsearch for search functionality." },
+  { term:"Direct-Attached Storage (DAS)", cat:"storage", def:"Storage devices directly connected to a computer.", ex:"External USB hard drive attached to a laptop for backups, or internal SSD drives in a server for local application storage." },
+  { term:"Extract-Load-Transform (ELT)", cat:"process", def:"A three-step pipeline: extract from source, load raw data into the target system, then transform it within the target.", ex:"Loading raw JSON into Snowflake first, then using SQL to reshape it into a star schema for analytics." },
+  { term:"Extract-Transform-Load (ETL)", cat:"process", def:"A three-step pipeline: extract from source, transform by cleaning and formatting, then load into the target system.", ex:"Informatica reading from a mainframe, cleaning and aggregating data, then loading into a data warehouse for reporting." },
+  { term:"Fiber Channel (FC)", cat:"protocol", def:"High-speed block storage protocol operating at speeds up to 128 GB/s, designed for high-performance data transfer environments.", ex:"Financial institutions using FC SAN for high-frequency trading databases, or video studios transferring 8K video files." },
+  { term:"Fiber Channel over Ethernet (FCoE)", cat:"protocol", def:"Storage protocol that transmits Fiber Channel traffic over Ethernet networks.", ex:"Data centers consolidating storage and network traffic over 10GbE cables, reducing the need for separate FC infrastructure." },
+  { term:"File Storage", cat:"storage", def:"Manages data as files organized in a hierarchical directory structure.", ex:"Corporate network drives, or a media server storing videos and music in organized folders for streaming." },
+  { term:"File-Based Connectors", cat:"connector", def:"Connectors that manage data integration through file transfers using formats like CSV, XML, and JSON.", ex:"An SFTP connector picking up CSV files from a server and loading them into a data warehouse, or processing XML feeds from trading partners." },
+  { term:"Hard Disk Drives (HDD)", cat:"storage", def:"Data storage that uses spinning magnetic disks to store and access data.", ex:"Traditional bulk storage drives in servers, or external backup drives for cost-effective large-capacity archiving." },
+  { term:"Hub-and-Spoke", cat:"process", def:"A data integration pattern with a central hub that connects all systems, reducing the number of direct peer-to-peer connections.", ex:"An Enterprise Service Bus (ESB) acting as the central hub connecting CRM, ERP, and HR systems." },
+  { term:"Hybrid Cloud", cat:"storage", def:"Combines elements of both public and private cloud storage models.", ex:"A company storing sensitive customer data on private cloud while using public cloud for burst computing needs." },
+  { term:"Integration Patterns", cat:"process", def:"Established best practices for designing efficient and effective data integration architectures.", ex:"Message queues for async integration, retry logic with exponential backoff, or choosing batch vs. real-time processing." },
+  { term:"Internet Small Computer System Interface (iSCSI)", cat:"protocol", def:"Block storage protocol that enables transmission of SCSI commands over IP networks.", ex:"Small businesses connecting servers to a storage array over existing network infrastructure, or VMware using iSCSI datastores." },
+  { term:"Magnetic Tape", cat:"storage", def:"Data storage medium that uses magnetic tape to store and retrieve data; primarily used for archival and backup.", ex:"Long-term compliance data archival, or enterprise backup systems storing years of transaction records." },
+  { term:"Memory", cat:"storage", def:"Volatile storage that temporarily holds data actively being processed.", ex:"RAM running multiple applications, or Redis caching frequently accessed database queries for faster response times." },
+  { term:"Network File System (NFS)", cat:"protocol", def:"File storage protocol developed by Sun Microsystems that allows users to access remote files as if they were local.", ex:"Linux servers sharing /home directories via NFS, or Kubernetes pods using NFS for persistent volume storage." },
+  { term:"Network-Attached Storage (NAS)", cat:"storage", def:"Storage that connects directly to a network, enabling multiple users to access data remotely.", ex:"Synology NAS in a small office for file sharing, or a home media server streaming content to multiple devices." },
+  { term:"Non-Volatile Memory Express (NVMe)", cat:"protocol", def:"Storage protocol designed for high-speed SSDs that leverages low latency and high throughput for significantly better performance than traditional storage interfaces.", ex:"Gaming PCs achieving 3-second boot times, or AI/ML workloads requiring ultra-fast data access from NVMe arrays." },
+  { term:"Optical Storage", cat:"storage", def:"Data storage that uses laser technology to read and write data.", ex:"Blu-ray discs for 4K movie distribution, or archival CDs/DVDs for long-term photo and document storage." },
+  { term:"Point-to-Point", cat:"process", def:"Direct, individual connections established between data sources and destinations without a central middleware layer.", ex:"Custom scripts moving data directly from MySQL to PostgreSQL, or a single API integration between one source and one destination." },
+  { term:"Primary-Replica Backup Configuration", cat:"process", def:"A pattern where data is stored and processed in a primary system and replicated — in real-time or on a schedule — to one or more secondary systems.", ex:"PostgreSQL primary in us-east-1 with a read replica in us-west-2 for disaster recovery, or a MongoDB replica set." },
+  { term:"Private Cloud", cat:"storage", def:"Cloud infrastructure dedicated exclusively to a single organization.", ex:"A bank's internal cloud for secure customer data processing, or a government agency's private cloud for classified information." },
+  { term:"Public Cloud", cat:"storage", def:"Cloud services and infrastructure provided to multiple third parties over the internet.", ex:"Netflix using AWS for streaming, or Spotify using Google Cloud for music delivery and user data storage." },
+  { term:"Serial Attached SCSI (SAS)", cat:"protocol", def:"Point-to-point block storage protocol evolved from parallel SCSI, primarily connecting servers to high-performance drives.", ex:"Enterprise servers using SAS SSDs for database transaction logs, or storage arrays with SAS backplanes." },
+  { term:"Server Message Block / CIFS (SMB/CIFS)", cat:"protocol", def:"File storage protocol that enables file sharing, allowing users and applications to access files on remote servers.", ex:"Windows file sharing across corporate networks, or macOS clients connecting to Windows shares for cross-platform access." },
+  { term:"Small Computer System Interface (SCSI)", cat:"protocol", def:"Block storage protocol that connects computers to peripheral devices such as hard drives and tape libraries.", ex:"Legacy servers with SCSI hard drives, or tape libraries using SCSI commands for backup operations." },
+  { term:"Solid State Drives (SSD)", cat:"storage", def:"Data storage that uses flash memory chips to store and retrieve data with no moving parts.", ex:"Modern laptops with NVMe SSDs for fast boot times, or gaming PCs for rapid game loading." },
+  { term:"Storage", cat:"storage", def:"Technologies and processes used to retain digital data persistently or temporarily.", ex:"A tiered backup strategy: SSDs for active data, HDDs for nearline storage, and tape for long-term archives." },
+  { term:"Storage Area Network (SAN)", cat:"storage", def:"A dedicated high-speed network that connects multiple storage devices to multiple servers.", ex:"Enterprise data centers using Fibre Channel SAN for databases, or virtualized environments sharing SAN storage across VMs." },
+  { term:"Storage Protocol", cat:"protocol", def:"Rules and standards that govern how storage devices and the systems accessing them communicate.", ex:"A storage admin choosing between iSCSI, Fibre Channel, or NFS based on performance requirements, budget, and existing infrastructure." },
+];
+
+DATA.sort((a,b) => a.term.localeCompare(b.term));
+
+let filter = 'all';
+let query  = '';
+let view   = 'grid';
+let allOpen = false;
+let openCount = 0;
+
+const $ = id => document.getElementById(id);
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function hl(text, q) {
+  if (!q) return esc(text);
+  const e = esc(text);
+  const qe = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return e.replace(new RegExp(`(${qe})`,'gi'),'<span class="hl">$1</span>');
+}
+
+function getFiltered() {
+  const q = query.toLowerCase();
+  return DATA.filter(d => {
+    const mc = filter === 'all' || d.cat === filter;
+    const mq = !q || d.term.toLowerCase().includes(q) || d.def.toLowerCase().includes(q) || d.ex.toLowerCase().includes(q);
+    return mc && mq;
+  });
+}
+
+function chipClass(cat) { return `chip-${cat}`; }
+
+function render() {
+  const filtered = getFiltered();
+  $('vis-count').textContent = filtered.length;
+
+  const main = $('main');
+  if (!filtered.length) {
+    main.innerHTML = `<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-text">NO_RESULTS_FOUND :: query="${esc(query)}"</div></div>`;
+    return;
+  }
+
+  // Group by first letter
+  const groups = {};
+  filtered.forEach(d => {
+    const k = d.term[0].toUpperCase();
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(d);
+  });
+
+  main.innerHTML = '';
+  openCount = 0;
+  $('h-open').textContent = 0;
+
+  Object.keys(groups).sort().forEach((letter, gi) => {
+    const section = document.createElement('div');
+    section.className = 'alpha-group';
+
+    section.innerHTML = `
+      <div class="alpha-header">
+        <div class="alpha-letter">${letter}</div>
+        <div class="alpha-line"></div>
+        <div class="alpha-count">${groups[letter].length} TERM${groups[letter].length !== 1 ? 'S' : ''}</div>
+      </div>
+      <div class="${view === 'grid' ? 'terms-grid' : 'terms-list'}" id="grp-${letter}"></div>
+    `;
+
+    main.appendChild(section);
+    const grid = document.getElementById(`grp-${letter}`);
+
+    groups[letter].forEach((d, i) => {
+      const card = document.createElement('div');
+      card.className = 'term-card';
+      card.dataset.cat = d.cat;
+      card.style.animationDelay = `${(gi * 5 + i) * 18}ms`;
+
+      const catLabel = d.cat.charAt(0).toUpperCase() + d.cat.slice(1);
+
+      card.innerHTML = `
+        <div class="card-accent"></div>
+        <div class="card-head">
+          <div class="card-head-left">
+            <div class="term-title">${hl(d.term, query)}</div>
+            <div class="cat-chip ${chipClass(d.cat)}">${catLabel}</div>
+          </div>
+          <div class="toggle-icon">+</div>
+        </div>
+        <div class="card-preview">${esc(d.def)}</div>
+        <div class="card-body">
+          <div class="def-block">${hl(d.def, query)}</div>
+          <div class="example-block">
+            <div class="example-header"><div class="example-dot"></div>REAL-WORLD EXAMPLE</div>
+            <div class="example-text">${hl(d.ex, query)}</div>
+          </div>
+          <div class="copy-row">
+            <button class="copy-btn" data-def="${esc(d.def)}">⎘ COPY DEF</button>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener('click', e => {
+        if (e.target.classList.contains('copy-btn')) return;
+        const wasOpen = card.classList.contains('open');
+        card.classList.toggle('open');
+        openCount += wasOpen ? -1 : 1;
+        $('h-open').textContent = Math.max(0, openCount);
+      });
+
+      card.querySelector('.copy-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        navigator.clipboard.writeText(d.def).then(() => {
+          btn.textContent = '✓ COPIED';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = '⎘ COPY DEF'; btn.classList.remove('copied'); }, 1500);
+        });
+      });
+
+      grid.appendChild(card);
+    });
+  });
+}
+
+function updateFooter() {
+  const cats = { connector:0, storage:0, protocol:0, process:0 };
+  DATA.forEach(d => cats[d.cat]++);
+  $('fc').textContent = cats.connector;
+  $('fs').textContent = cats.storage;
+  $('fp').textContent = cats.protocol;
+  $('fpr').textContent = cats.process;
+  $('h-total').textContent = DATA.length;
+  $('tot-count').textContent = DATA.length;
+  $('vis-count').textContent = DATA.length;
+}
+
+// Init
+updateFooter();
+render();
+
+// Search
+let st;
+$('searchInput').addEventListener('input', e => {
+  clearTimeout(st);
+  st = setTimeout(() => { query = e.target.value; render(); }, 220);
+});
+
+// Filters
+document.querySelectorAll('[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    filter = btn.dataset.filter;
+    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+});
+
+// View toggle
+$('btn-grid').addEventListener('click', () => { view='grid'; $('btn-grid').classList.add('active'); $('btn-list').classList.remove('active'); render(); });
+$('btn-list').addEventListener('click', () => { view='list'; $('btn-list').classList.add('active'); $('btn-grid').classList.remove('active'); render(); });
+
+// Expand all
+$('expandAll').addEventListener('click', () => {
+  allOpen = !allOpen;
+  document.querySelectorAll('.term-card').forEach(c => c.classList.toggle('open', allOpen));
+  openCount = allOpen ? getFiltered().length : 0;
+  $('h-open').textContent = openCount;
+  $('expandAll').textContent = allOpen ? 'Collapse All' : 'Expand All';
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); $('searchInput').focus(); }
+});
+</script>
+</body>
+</html>
