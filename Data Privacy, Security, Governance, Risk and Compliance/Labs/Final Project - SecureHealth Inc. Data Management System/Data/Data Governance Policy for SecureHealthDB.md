@@ -1,4 +1,4 @@
-![Logo](Data Governance Policy for SecureHealthDB.png)
+![Logo](<Data Governance Policy for SecureHealthDB.png>)
 
 # Data Governance Policy for SecureHealthDB
 
