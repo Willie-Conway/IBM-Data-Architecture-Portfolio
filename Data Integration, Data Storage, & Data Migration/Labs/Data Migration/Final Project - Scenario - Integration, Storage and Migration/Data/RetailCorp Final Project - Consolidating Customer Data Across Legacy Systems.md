@@ -1,3 +1,5 @@
+![RetailCorp](../Screenshots/RetailCorp.png)
+
 # RetailCorp Final Project: Consolidating Customer Data Across Legacy Systems
 
 ## Junior Data Migration Specialist Analysis and Recommendations
