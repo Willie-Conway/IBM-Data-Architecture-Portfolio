@@ -16,12 +16,12 @@
 Welcome to my comprehensive **IBM Data Architecture Portfolio**! This repository showcases hands-on projects, labs, and assignments covering enterprise data architecture, data governance, ETL pipeline development, database migration strategies, and system integration. Through real-world case studies and capstone projects, I demonstrate expertise in designing, implementing, and managing complex data architectures for modern enterprises.
 
 <p float="left">
-    <img src="Data%20Architect%20Capstone%20Project/Labs/Design%20the%20Data%20Architecture%20for%20the%20Merged%20Entity/Screenshots/FutureMart.png" width="300" />
-    <img src="Data%20Architect%20Capstone%20Project/Labs/Design%20the%20Data%20Architecture%20for%20the%20Merged%20Entity/Screenshots/FashionMart.png" width="300" />
-    <img src="Data%20Architect%20Capstone%20Project/Labs/Design%20the%20Data%20Architecture%20for%20the%20Merged%20Entity/Screenshots/TrendyThreads.png" width="300" />
-    <img src="Enterprise%20Data%20Architecture%20and%20Operations/Labs/Final%20Project%20-%20DigiHealth%20Modernization%20Initiative/Screenshots/DigiHealth.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f74cf4a30a46f5285bd62acb63d19d7b29fe57e1/Data%20Integration%2C%20Data%20Storage%2C%20%26%20Data%20Migration/Labs/Data%20Migration/Screenshots/data-pipeline-diagram-reduced.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f980a2b6e1b1f2f25401faa76d3c05a28fea1238/Data%20Integration%2C%20Data%20Storage%2C%20%26%20Data%20Migration/Labs/Data%20Migration/Data%20Governance%20Layer.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f74cf4a30a46f5285bd62acb63d19d7b29fe57e1/Data%20Privacy%2C%20Security%2C%20Governance%2C%20Risk%20and%20Compliance/Labs/MySQL%20User%20Management%2C%20Access%20Control%2C%20and%20Encryption/Screenshots/Exercise%202%20-%20Control%20access%20to%20MySQL%20databases%20and%20their%20objects/Successfully%20update%20sales_rep%20priviledges.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f980a2b6e1b1f2f25401faa76d3c05a28fea1238/Data%20Privacy%2C%20Security%2C%20Governance%2C%20Risk%20and%20Compliance/Labs/MySQL%20User%20Management%2C%20Access%20Control%2C%20and%20Encryption/Screenshots/ERD.png" width="300" />
     <img src="Data%20Architect%20Capstone%20Project/Labs/Integration%2C%20ETL%2C%20and%20Backup%20Operations/Screenshots/FutureMart.png" width="300" />
-    <img src="Enterprise%20Data%20Architecture%20and%20Operations/Labs/Prepare%20a%20Flowchart%20for%20the%20Consolidation%20of%20Data%20Infrastructure/Screenshots/FinEdge.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f980a2b6e1b1f2f25401faa76d3c05a28fea1238/Data%20Integration%2C%20Data%20Storage%2C%20%26%20Data%20Migration/Labs/Data%20Migration/EDA.png" width="300" />
 </p>
 
 ## 🏆 Portfolio Details
