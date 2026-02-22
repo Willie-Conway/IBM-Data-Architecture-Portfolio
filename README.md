@@ -21,7 +21,7 @@ Welcome to my comprehensive **IBM Data Architecture Portfolio**! This repository
     <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f74cf4a30a46f5285bd62acb63d19d7b29fe57e1/Data%20Privacy%2C%20Security%2C%20Governance%2C%20Risk%20and%20Compliance/Labs/MySQL%20User%20Management%2C%20Access%20Control%2C%20and%20Encryption/Screenshots/Exercise%202%20-%20Control%20access%20to%20MySQL%20databases%20and%20their%20objects/Successfully%20update%20sales_rep%20priviledges.png" width="300" />
     <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f980a2b6e1b1f2f25401faa76d3c05a28fea1238/Data%20Privacy%2C%20Security%2C%20Governance%2C%20Risk%20and%20Compliance/Labs/MySQL%20User%20Management%2C%20Access%20Control%2C%20and%20Encryption/Screenshots/ERD.png" width="300" />
     <img src="Data%20Architect%20Capstone%20Project/Labs/Integration%2C%20ETL%2C%20and%20Backup%20Operations/Screenshots/FutureMart.png" width="300" />
-    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/f980a2b6e1b1f2f25401faa76d3c05a28fea1238/Data%20Integration%2C%20Data%20Storage%2C%20%26%20Data%20Migration/Labs/Data%20Migration/EDA.png" width="300" />
+    <img src="https://github.com/Willie-Conway/IBM-Data-Architecture-Portfolio/blob/d0afbaad8da72d4eaee65d2e7bb9ebed4b9c355f/Data%20Integration%2C%20Data%20Storage%2C%20%26%20Data%20Migration/Labs/Data%20Migration/Data%20Transformation%20Layer.png" width="300" />
 </p>
 
 ## 🏆 Portfolio Details
@@ -171,6 +171,7 @@ Welcome to my comprehensive **IBM Data Architecture Portfolio**! This repository
 ![Apache Hadoop](https://img.shields.io/badge/Apache_Hadoop-66CCFF?style=for-the-badge&logo=apache-hadoop&logoColor=black)
 ![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white)
 ![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apache-airflow&logoColor=white)
+![Apache Hive](https://img.shields.io/badge/Apache_Hive-FDEE21?style=for-the-badge&logo=apache-hive&logoColor=black)
 
 ### **Data Governance & Security**
 ![Data Governance](https://img.shields.io/badge/Data_Governance-00C7B7?style=for-the-badge&logo=databricks&logoColor=white)
