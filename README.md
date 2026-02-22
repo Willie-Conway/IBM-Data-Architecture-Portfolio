@@ -171,6 +171,7 @@ Welcome to my comprehensive **IBM Data Architecture Portfolio**! This repository
 ![Apache Hadoop](https://img.shields.io/badge/Apache_Hadoop-66CCFF?style=for-the-badge&logo=apache-hadoop&logoColor=black)
 ![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white)
 ![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apache-airflow&logoColor=white)
+![Apache Hive](https://img.shields.io/badge/Apache_Hive-FDEE21?style=for-the-badge&logo=apache-hive&logoColor=black)
 
 ### **Data Governance & Security**
 ![Data Governance](https://img.shields.io/badge/Data_Governance-00C7B7?style=for-the-badge&logo=databricks&logoColor=white)
