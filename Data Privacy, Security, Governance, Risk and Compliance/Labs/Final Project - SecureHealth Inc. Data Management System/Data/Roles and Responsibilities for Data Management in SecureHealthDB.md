@@ -1,4 +1,4 @@
-![Logo](Roles and Responsibilities for Data Management in SecureHealthDB.png)
+![Logo](<Roles and Responsibilities for Data Management in SecureHealthDB.png>)
 
 # Roles and Responsibilities for Data Management in SecureHealthDB
 
