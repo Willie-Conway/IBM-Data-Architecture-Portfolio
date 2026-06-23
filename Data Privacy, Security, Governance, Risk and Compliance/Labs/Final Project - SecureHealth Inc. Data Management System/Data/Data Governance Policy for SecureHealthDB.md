@@ -188,7 +188,7 @@ END//
 
 #### Data Quality Issue Resolution Workflow
 
-![Diagram](Data Quality Issue Resolution Workflow.png)
+![Diagram](<Data Quality Issue Resolution Workflow.png>)
 
 ---
 
