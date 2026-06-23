@@ -370,7 +370,7 @@ DELIMITER ;
 
 ## 4. Data Governance Implementation Timeline
 
-![Diagram](Data Governance Implementation Timeline.png)
+![Diagram](<Data Governance Implementation Timeline.png>)
 
 ---
 
