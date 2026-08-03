@@ -2,7 +2,7 @@
 
 ![IBM Data Architecture](https://images.credly.com/size/680x680/images/467ec134-fc13-4f4d-ba1a-f4b8d97b9a86/Coursera_20Data_20Architecture.png)
 
-![IBM Data Architecture](https://img.shields.io/badge/IBM-Data_Architecture-0072CE?style=for-the-badge&logo=ibm)
+![IBM Data Architecture](https://img.shields.io/badge/IBM-Data_Architect-0072CE?style=for-the-badge&logo=ibm)
 ![Data Architecture](https://img.shields.io/badge/Data_Architecture-FF6C37?style=for-the-badge&logo=apache&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
